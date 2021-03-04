@@ -1,9 +1,9 @@
 package com.havving.system.domain.impl;
 
 import com.havving.system.domain.SysModel;
+import org.joda.time.DateTime;
 
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * Created by HAVVING on 2021-03-03.
@@ -42,8 +42,7 @@ public class GeneralSysModel implements SysModel {
     }
 
     public long getTime() {
-        return new Date().getTime();
-    }
+        return new DateTime().getMillis(); }
 
     public CpuSysModel getCpu() {
         return this.cpu;

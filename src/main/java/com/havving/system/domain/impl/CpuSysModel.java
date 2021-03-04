@@ -1,8 +1,8 @@
 package com.havving.system.domain.impl;
 
 import com.havving.system.domain.SysModel;
+import org.joda.time.DateTime;
 
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -22,7 +22,7 @@ public class CpuSysModel implements SysModel {
 
     public CpuSysModel(String hostName) {
         this.host = hostName;
-        this.time = new Date().getTime();
+        this.time = new DateTime().getMillis();
     }
 
     public String getHost() {

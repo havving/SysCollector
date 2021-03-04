@@ -6,18 +6,21 @@ package com.havving.system;
 
 
 import com.havving.Printer;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+import org.apache.commons.io.FileUtils;
+
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.List;
 
 
 /**
  * SysCollector Main Class
  */
 public class SysCollector {
-    private static final Logger log = LoggerFactory.getLogger(SysCollector.class);
+    //private static final Logger log = LoggerFactory.getLogger(SysCollector.class);
 
     public static void main(String[] args) {
         // Initialize
@@ -63,20 +66,30 @@ public class SysCollector {
                 // process kill on linux
                 if ("-k".equals(arg) || "--kill".equals(arg)) {
                     if (System.getProperty("os.name").toLowerCase().contains("linux")) {
-                        File pidFile = new File("syscollector.pid");
-                        if (!pidFile.exists()) {
-                            System.out.println("pid File not exist.");
-                            return;
-                        }
+                        try {
+                            File pidFile = new File("syscollector.pid");
+                            if (!pidFile.exists()) {
+                                System.out.println("pid File not exist.");
+                                return;
+                            }
+                            List<String> lines = FileUtils.readLines(pidFile, Charset.forName("UTF-8"));
+                            System.out.println("SysCollector kill pid " + lines.get(0));
+                            Runtime.getRuntime().exec(new String[]{
+                                    "kill",
+                                    "-15",
+                                    lines.get(0)
+                            });
+                        } catch (IOException e) {
 
+                        }
+                    } else {
+                        System.out.println("kill function can't run this platform.");
                     }
-                } else {
-                    System.out.println("kill function can't run this platform.");
                 }
             }
-            System.exit(0);
+                System.exit(0);
+            }
         }
-    }
 
 
     /**

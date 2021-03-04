@@ -1,8 +1,6 @@
 package com.havving;
 
 import com.havving.system.domain.impl.*;
-import com.sun.org.apache.xml.internal.serializer.Serializer;
-
 import java.util.Date;
 
 /**

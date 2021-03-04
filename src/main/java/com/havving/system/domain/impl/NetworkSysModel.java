@@ -1,8 +1,7 @@
 package com.havving.system.domain.impl;
 
 import com.havving.system.domain.SysModel;
-
-import java.util.Date;
+import org.joda.time.DateTime;
 
 /**
  * Created by HAVVING on 2021-03-03.
@@ -35,7 +34,7 @@ public class NetworkSysModel implements SysModel {
 
     public NetworkSysModel(String hostName) {
         this.host = hostName;
-        this.time = new Date().getTime();
+        this.time = new DateTime().getMillis();
     }
 
     public String getHost() {
