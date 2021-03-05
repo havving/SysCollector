@@ -7,10 +7,12 @@ package com.havving.system;
 
 import com.havving.Printer;
 import org.apache.commons.io.FileUtils;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.List;
  * SysCollector Main Class
  */
 public class SysCollector {
-    //private static final Logger log = LoggerFactory.getLogger(SysCollector.class);
+    private static final Logger log = LoggerFactory.getLogger(SysCollector.class);
 
     public static void main(String[] args) {
         // Initialize
@@ -31,6 +33,8 @@ public class SysCollector {
 
         // add shutdown hook
         shutdownHook();
+        createPidFile();
+        log.info("ServiceManager Run.");
     }
 
 
@@ -74,13 +78,15 @@ public class SysCollector {
                             }
                             List<String> lines = FileUtils.readLines(pidFile, Charset.forName("UTF-8"));
                             System.out.println("SysCollector kill pid " + lines.get(0));
+                            // 시스템 command 실행
+                            // kill -15 pid : 정상 종료
                             Runtime.getRuntime().exec(new String[]{
                                     "kill",
                                     "-15",
                                     lines.get(0)
                             });
                         } catch (IOException e) {
-
+                            e.printStackTrace();
                         }
                     } else {
                         System.out.println("kill function can't run this platform.");
@@ -96,11 +102,33 @@ public class SysCollector {
      * shutdown
      */
     private static void shutdownHook() {
+        //JVM 셧다운 전, 종료 작업 처리
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-
+                log.info("SysCollector terminate signal gas been called. Process goes down.\n ");
+                System.out.println("SysCollector terminate signal gas been called. Process goes down.\n");
             }
         });
+    }
+
+
+    /**
+     * create pid file
+     */
+    private static void createPidFile() {
+        try {
+            File pidFile = new File("syscollector.pid");
+            if (pidFile.exists()) {
+                FileUtils.forceDelete(pidFile);
+            }
+            // pid 구하기 (pid@pc명)
+            String name = ManagementFactory.getRuntimeMXBean().getName();
+            String pid = name.split("@")[0];
+            FileUtils.write(pidFile, pid, Charset.forName("UTF-8"), false);
+            System.out.println("SysCollector has been initialized pid: " + pid + " location: " + pidFile.getAbsoluteFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
