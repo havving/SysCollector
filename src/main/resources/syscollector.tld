@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configs host="192.168.0.22">
+    <system-collect cpuEnable="false" memoryEnable="false" diskEnable="false" networkEnable="false" engineEnable="false">
+        <dirNameList> <!-- Windows delimiter=\, Unix delimiter=/ -->
+            <dirname>c:\</dirname>
+            <dirname>d:\</dirname>
+        </dirNameList>
+
+        <ipAddressNameList>
+            <ipAddressName>192.168.10.1</ipAddressName>
+        </ipAddressNameList>
+    </system-collect>
+
+    <proceess-collect>
+        <!-- threshold value type: CPU - %, MEMORY - MB -->
+        <process name="java"/>
+
+    </proceess-collect>
+
+    <es-collect masterIp="localhost" desetination-port="9200"/>
+
+</Configs>

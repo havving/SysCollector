@@ -6,10 +6,13 @@ package com.havving.system;
 
 
 import com.havving.Printer;
+import com.havving.system.domain.xml.Configs;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -28,6 +31,12 @@ public class SysCollector {
         // Initialize
         URL url = SysCollector.class.getClassLoader().getResource("syscollector.xml");
         File xml = new File(url.getFile());
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(Configs.class);
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
 
         argsCheckup(args);
 
