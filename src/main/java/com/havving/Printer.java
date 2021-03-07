@@ -1,7 +1,11 @@
 package com.havving;
 
 import com.havving.system.domain.impl.*;
+import com.havving.system.domain.xml.Configs;
 
+import javax.xml.bind.JAXBContext;
+import java.io.File;
+import java.net.URL;
 import java.util.Date;
 
 /**
@@ -96,7 +100,14 @@ public class Printer {
     }
 
     private void printConfig() {
-
+        URL url = Printer.class.getClassLoader().getResource("syscollector.xml");
+        File xmlFile = new File(url.getFile());
+        try {
+//            System.out.println(JAXBContext.newInstance(Configs.class, xmlFile).toString());
+//            System.out.println(serializer.read(Configs.class, xml).toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -7,6 +7,7 @@ package com.havving.system;
 
 import com.havving.Printer;
 import com.havving.system.domain.xml.Configs;
+
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class SysCollector {
     public static void main(String[] args) {
         // Initialize
         URL url = SysCollector.class.getClassLoader().getResource("syscollector.xml");
-        File xml = new File(url.getFile());
+        File xmlFile = new File(url.getFile());
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Configs.class);
 
