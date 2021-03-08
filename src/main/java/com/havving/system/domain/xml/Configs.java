@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Created by HAVVING on 2021-03-06.
+ * syscollector.xml configure class
  */
 
 @XmlRootElement

@@ -93,7 +93,7 @@ public class Printer {
         System.out.println("\nNetwork :");
         NetworkSysModel[] networks = models[0].getNetwork();
         for (NetworkSysModel n : networks) {
-            System.out.println("    " + n.getName() + " MacAddr:" + n.getMacAddr() + ", NetMask:" + n.getNetMask() +  ", NetIpAddr:" + n.getNetIpAddr() + ", BroadCast:" + n.getBroadCast());
+            System.out.println("    " + n.getName() + " MacAddr:" + n.getMacAddr() + ", NetMask:" + n.getNetMask() + ", NetIpAddr:" + n.getNetIpAddr() + ", BroadCast:" + n.getBroadCast());
             System.out.println("    Received Bytes:" + n.getRxBytes() + ", Dropped:" + n.getRxDropped() + ", Errors:" + n.getRxErrors() + ", Packets:" + n.getRxPackets());
             System.out.println("    Transmitted Bytes:" + n.getTxBytes() + ", Dropped:" + n.getTxDropped() + ", Errors:" + n.getTxErrors() + ", Packets:" + n.getTxPackets());
         }

@@ -50,6 +50,7 @@ public class SysCollector {
 
     /**
      * 명령어 체크
+     *
      * @param args
      */
     private static void argsCheckup(String[] args) {
@@ -103,9 +104,9 @@ public class SysCollector {
                     }
                 }
             }
-                System.exit(0);
-            }
+            System.exit(0);
         }
+    }
 
 
     /**

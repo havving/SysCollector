@@ -42,7 +42,8 @@ public class GeneralSysModel implements SysModel {
     }
 
     public long getTime() {
-        return new DateTime().getMillis(); }
+        return new DateTime().getMillis();
+    }
 
     public CpuSysModel getCpu() {
         return this.cpu;
