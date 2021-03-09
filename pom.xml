@@ -54,6 +54,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Sigar System JNI library -->
+        <dependency>
+            <groupId>org.fusesource</groupId>
+            <artifactId>sigar</artifactId>
+            <version>1.6.4</version>
+        </dependency>
+
     </dependencies>
 
 </project>

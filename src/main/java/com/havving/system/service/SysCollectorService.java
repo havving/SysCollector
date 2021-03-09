@@ -8,8 +8,9 @@ import java.lang.annotation.Target;
 /**
  * Created by HAVVING on 2021-03-08.
  */
-@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface SysCollectorService {
     String name() default "";
 }
+
