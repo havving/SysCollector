@@ -28,6 +28,16 @@ import java.util.List;
 public class SysCollector {
     private static final Logger log = LoggerFactory.getLogger(SysCollector.class);
 
+    /**
+     * -- Main Method --
+     * 1. read xml file
+     * 2. check argument
+     * 3. shutdown hook
+     * 4. create pid file
+     * 5. service run
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         // Initialize
         URL url = SysCollector.class.getClassLoader().getResource("syscollector.xml");
@@ -49,7 +59,7 @@ public class SysCollector {
 
 
     /**
-     * 명령어 체크
+     * cmd 명령어에 따른 출력 기능 수행
      *
      * @param args
      */

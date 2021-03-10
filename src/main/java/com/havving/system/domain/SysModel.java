@@ -1,7 +1,7 @@
 package com.havving.system.domain;
 
 /**
- * Created by HAVVING on 2021-03-03.
+ * Created by HAVVING on 2021-03-09.
  */
 public interface SysModel {
     String getHost();
