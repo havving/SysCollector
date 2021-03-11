@@ -1,4 +1,4 @@
-package com.havving.system.domain.global;
+package com.havving.system.global;
 
 import com.havving.system.domain.xml.Configs;
 

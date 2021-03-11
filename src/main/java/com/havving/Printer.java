@@ -1,7 +1,10 @@
 package com.havving;
 
+import com.havving.system.domain.JsonResponse;
 import com.havving.system.domain.impl.*;
 import com.havving.system.domain.xml.Configs;
+import com.havving.system.service.SystemCollectorService;
+import org.hyperic.sigar.Sigar;
 
 import javax.xml.bind.JAXBContext;
 import java.io.File;
@@ -14,7 +17,16 @@ import java.util.Date;
 public class Printer {
     GeneralSysModel[] models;
 
+    /**
+     *
+     */
     public Printer() {
+        SystemCollectorService service = new SystemCollectorService();
+        Sigar sigar = new Sigar();
+        service.setSigar(sigar);
+        JsonResponse<GeneralSysModel> result = service.getTotalJson();
+        models = result.getModel();
+        sigar.close();
 
     }
 

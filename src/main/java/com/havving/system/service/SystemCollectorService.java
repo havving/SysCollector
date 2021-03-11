@@ -1,11 +1,10 @@
 package com.havving.system.service;
 
+import com.havving.system.domain.JsonResponse;
+import com.havving.system.domain.StatusCode;
 import com.havving.system.domain.SysModel;
-import com.havving.system.domain.global.Constants;
-import com.havving.system.domain.impl.CpuSysModel;
-import com.havving.system.domain.impl.DiskSysModel;
-import com.havving.system.domain.impl.ExceptionSysModel;
-import com.havving.system.domain.impl.NetworkSysModel;
+import com.havving.system.global.Constants;
+import com.havving.system.domain.impl.*;
 import org.hyperic.sigar.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -195,5 +194,33 @@ public class SystemCollectorService {
     private boolean validate() {
         if (sigar == null) log.error("Sigar not initialized.");
         return sigar != null;
+    }
+
+    /**
+     *
+     * @param sigar
+     */
+    public void setSigar(Sigar sigar) {
+        this.sigar = sigar;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public final JsonResponse<GeneralSysModel> getTotalJson() {
+        GeneralSysModel generalSysModel = new GeneralSysModel(Constants.getConfig().host);
+        if (validate()) {
+            generalSysModel.setCpu((CpuSysModel) getCpu());
+            generalSysModel.setDisk((DiskSysModel[]) getDisk());
+
+            JsonResponse<GeneralSysModel> result = new JsonResponse<GeneralSysModel>(StatusCode.OK, generalSysModel);
+            log.debug("Response : {}", result);
+
+            return result;
+        } else {
+            log.debug("Validation Error. Server Internal Error send.");
+            return new JsonResponse<GeneralSysModel>(StatusCode.SERVER_ERROR, generalSysModel);
+        }
     }
 }
