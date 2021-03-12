@@ -157,6 +157,34 @@ public class SystemCollectorService {
 
     /**
      *
+     * @return
+     */
+    public SysModel[] getNetworks() {
+        if (validate()) {
+            Vector<String> ipAddressList = Constants.getConfig().systemCollect.ipAddressList;
+            SysModel[] result = new NetworkSysModel[ipAddressList.size()];
+            for (int i = 0; i < ipAddressList.size(); i++) {
+                String netInterface = ipAddressList.get(i);
+                SysModel network = getNetwork(netInterface);
+                result[i] = network;
+            }
+            return result;
+        } else
+            return new SysModel[]{};
+    }
+
+    /**
+     *
+     * @param ipAddressName
+     * @return
+     */
+    public SysModel getNetwork(String ipAddressName) {
+
+        return null;
+    }
+
+    /**
+     *
      * @param prev
      * @param curr
      * @return
