@@ -30,6 +30,9 @@ public class Printer {
 
     }
 
+    /**
+     * Print [Help] Information
+     */
     public static void printHelp() {
         System.out.println("----SysCollector Usage");
         System.out.println("     -a, --all       : All Information.");
@@ -42,6 +45,10 @@ public class Printer {
         System.out.println("     -cfg, --config  : Syscollector configurations.");
     }
 
+    /**
+     * 입력된 argument에 따른 출력
+     * @param mode
+     */
     public void print(PrintMode mode) {
         System.out.println("Configured host: " + models[0].getHost());
         System.out.println("Time: " + new Date(models[0].getTime()));
@@ -68,6 +75,9 @@ public class Printer {
         }
     }
 
+    /**
+     * Print [CPU, Memory, Disk, Network] All Information
+     */
     private void printAll() {
         printCpu();
         printMemory();
@@ -75,6 +85,9 @@ public class Printer {
         printNetwork();
     }
 
+    /**
+     * Print [CPU] Information
+     */
     private void printCpu() {
         System.out.println("\nCPU: ");
         CpuSysModel cpu = models[0].getCpu();
@@ -84,6 +97,9 @@ public class Printer {
         }
     }
 
+    /**
+     * Print [Memory] Information
+     */
     private void printMemory() {
         System.out.println("\nMemory :");
         MemorySysModel mem = models[0].getMemory();
@@ -92,6 +108,9 @@ public class Printer {
                 + ", PageIn:" + mem.getSwapPageIn() + ", PageOut:" + mem.getSwapPageOut());
     }
 
+    /**
+     * Print [Disk] Information
+     */
     private void printDisk() {
         System.out.println("\nDisk :");
         DiskSysModel[] disks = models[0].getDisk();
@@ -101,6 +120,9 @@ public class Printer {
         }
     }
 
+    /**
+     * Print [Network] Information
+     */
     private void printNetwork() {
         System.out.println("\nNetwork :");
         NetworkSysModel[] networks = models[0].getNetwork();
@@ -111,6 +133,9 @@ public class Printer {
         }
     }
 
+    /**
+     * Print [Config] Information
+     */
     private void printConfig() {
         URL url = Printer.class.getClassLoader().getResource("syscollector.xml");
         File xmlFile = new File(url.getFile());

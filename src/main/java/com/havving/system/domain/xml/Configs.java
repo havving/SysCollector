@@ -22,4 +22,23 @@ public class Configs {
     @XmlElement(name = "es-collect")
     public EsStore esCollect;
 
+
+    /**
+     *
+     * @param args
+     * @return
+     */
+    public boolean containsLookupProcess(String args) {
+        if (process != null) {
+            for (Process p : process) {
+                if (p.name.equals(args)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
 }

@@ -3,18 +3,16 @@ package com.havving.system.service;
 import com.havving.system.domain.JsonResponse;
 import com.havving.system.domain.StatusCode;
 import com.havving.system.domain.SysModel;
-import com.havving.system.global.Constants;
 import com.havving.system.domain.impl.*;
+import com.havving.system.global.Constants;
+import org.apache.commons.lang3.StringUtils;
 import org.hyperic.sigar.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.havving.util.ExceptionUtils.printExceptionLog;
@@ -30,14 +28,15 @@ public class SystemCollectorService {
     private volatile Map<String, NetworkSysModel> prevNetwork = new ConcurrentHashMap<String, NetworkSysModel>();
     private volatile Map<String, DiskSysModel> prevDisk = new ConcurrentHashMap<String, DiskSysModel>();
 
+
     /**
-     *
+     * get [HostName]
      * @return
      */
     public String getHostName() {
         String hostName = null;
         try {
-            InetAddress localhost= InetAddress.getLocalHost();
+            InetAddress localhost = InetAddress.getLocalHost();
             hostName = localhost.getHostName();
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -46,9 +45,11 @@ public class SystemCollectorService {
         return hostName != null ? hostName : "UnKnown";
     }
 
+
     /**
+     * get [CPU] Information
      *
-     * @return
+     * @return CpuSysModel
      */
     public SysModel getCpu() {
         if(validate()) {
@@ -89,9 +90,11 @@ public class SystemCollectorService {
             return null;
     }
 
+
     /**
+     * get [Disk] Information
      *
-     * @return
+     * @return DiskSysModel[]
      */
     public SysModel[] getDisk() {
         if (validate()) {
@@ -155,6 +158,7 @@ public class SystemCollectorService {
             return null;
     }
 
+
     /**
      *
      * @return
@@ -173,15 +177,233 @@ public class SystemCollectorService {
             return new SysModel[]{};
     }
 
+
     /**
      *
      * @param ipAddressName
      * @return
      */
     public SysModel getNetwork(String ipAddressName) {
+        if (validate()) {
+            try {
+                NetworkSysModel networkSysModel = new NetworkSysModel(Constants.getConfig().host);
+                String[] netInterfaces = sigar.getNetInterfaceList();
+                for (String netInterface : netInterfaces) {
+                    NetInterfaceConfig conf = sigar.getNetInterfaceConfig(netInterface);
+                    if (conf.getAddress().equals(ipAddressName)) {
+                        log.debug("Ethernet name '{}' information get start.", conf.getName());
+                        // NetInterfaceConfig
+                        networkSysModel.setBroadCast(conf.getBroadcast());
+                        networkSysModel.setMacAddr(conf.getHwaddr());
+                        networkSysModel.setMetric(conf.getMetric());
+                        networkSysModel.setHost(this.getHostName());
+                        networkSysModel.setName(conf.getName());
+                        networkSysModel.setMtu(conf.getMtu());
+                        networkSysModel.setNetMask(conf.getNetmask());
+                        networkSysModel.setNetIpAddr(conf.getAddress());
 
-        return null;
+                        // NetInterfaceStat
+                        NetInterfaceStat stat = sigar.getNetInterfaceStat(netInterface);
+                        networkSysModel.setSpeed(stat.getSpeed());
+
+                        // Receive packet data
+                        networkSysModel.setRxPackets(stat.getRxPackets());
+                        networkSysModel.setRxDropped(stat.getRxDropped());
+                        networkSysModel.setRxErrors(stat.getRxErrors());
+                        networkSysModel.setRxBytes(stat.getRxBytes());
+
+                        // Transmit packet data
+                        networkSysModel.setTxPackets(stat.getTxPackets());
+                        networkSysModel.setTxDropped(stat.getTxDropped());
+                        networkSysModel.setTxErrors(stat.getTxErrors());
+                        networkSysModel.setTxBytes(stat.getTxBytes());
+                    }
+                }
+
+                log.debug("{}", networkSysModel);
+                if (prevNetwork != null && prevNetwork.get(networkSysModel.getName()) != null) {
+                    networkSysModel = (NetworkSysModel) loadAvgByTimeMillis(prevNetwork.get(networkSysModel.getName()), networkSysModel);
+                }
+                prevNetwork.put(networkSysModel.getName(), networkSysModel);
+
+                return networkSysModel;
+
+            } catch (SigarException e) {
+                printExceptionLog(getClass(), e);
+                return new ExceptionSysModel(Constants.getConfig().host, e);
+            }
+        } else
+            return null;
     }
+
+
+    /**
+     * get [Memory] Information
+     *
+     * @return MemorySysModel
+     */
+    public SysModel getMemory() {
+        if (validate()) {
+            MemorySysModel memorySysModel = new MemorySysModel(Constants.getConfig().host);
+            try {
+                Mem mem = sigar.getMem();
+                Swap swap = sigar.getSwap();
+                memorySysModel.setSwapFree(swap.getFree() / 1024 / 1024);
+                memorySysModel.setSwapTotal(swap.getTotal() / 1024 / 1024);
+                memorySysModel.setSwapUsed(swap.getUsed() / 1024 / 1024);
+                memorySysModel.setSwapPageIn(swap.getPageIn() / 1024 / 1024);
+                memorySysModel.setSwapPageOut(swap.getPageOut() / 1024 / 1024);
+                memorySysModel.setActualFree(mem.getActualFree() / 1024 / 1024);
+                memorySysModel.setActualUsed(mem.getActualUsed() / 1024 / 1024);
+                memorySysModel.setFreePercent(Math.round(mem.getFreePercent() * 100d) / 100d);
+                memorySysModel.setUsedPercent(Math.round(mem.getUsedPercent() * 100d) / 100d);
+                memorySysModel.setRam(mem.getRam() / 1024 / 1024);
+                memorySysModel.setTotal(mem.getTotal() / 1024 / 1024);
+                memorySysModel.setHostName(this.getHostName());
+
+                String hostName = null;
+                try {
+                    InetAddress localhost = InetAddress.getLocalHost();
+                    hostName = localhost.getHostName();
+                } catch (UnknownHostException e) {
+                    log.error("", e);
+                }
+                memorySysModel.setHostName(hostName != null ? hostName : "UnKnown");
+                log.debug("{}", memorySysModel);
+
+                return memorySysModel;
+
+            } catch (SigarException e) {
+                printExceptionLog(getClass(), e);
+                return new ExceptionSysModel(Constants.getConfig().host, e);
+            } catch (UnsatisfiedLinkError e) {
+                printExceptionLog(getClass(), e);
+                log.info("Memory collect failed.");
+                return null;
+            }
+        } else
+            return null;
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    public SysModel[] getProcesses() {
+        if (validate()) {
+            List<SysModel> resultList = new ArrayList<SysModel>();
+            try {
+                for (long pid : sigar.getProcList()) {
+                    if (validProcess(pid)) {
+                        SysModel result = getProcess(pid);
+                        resultList.add(result);
+                    }
+                }
+                return resultList.toArray(new SysModel[resultList.size()]);
+
+            } catch (SigarException e) {
+                printExceptionLog(getClass(), e);
+                return new ExceptionSysModel[] { new ExceptionSysModel(Constants.getConfig().host, e)};
+            } catch (UnsatisfiedLinkError e) {
+                printExceptionLog(getClass(), e);
+                log.info("Process collect failed.");
+                return new SysModel[]{};
+            }
+        } else
+            return new SysModel[]{};
+    }
+
+
+    /**
+     *
+     * @param pid
+     * @return
+     */
+    private SysModel getProcess(long pid) throws SigarException {
+        ProcessSysModel processSysModel = new ProcessSysModel(Constants.getConfig().host);
+        NetInfo info = sigar.getNetInfo();
+
+        // Process common information
+        ProcState pst = sigar.getProcState(pid);
+        processSysModel.setPid(pid);
+        processSysModel.setPpid(pst.getPpid());
+        processSysModel.setName(pst.getName());
+        processSysModel.setPriority(pst.getPriority());
+        processSysModel.setState(pst.getState());
+        processSysModel.setThreads(pst.getThreads());
+        processSysModel.setHostName(this.getHostName());
+
+        try {
+            ProcCpu procCpu = sigar.getProcCpu(pid);
+            processSysModel.setCpuUsage(((int) ((procCpu.getPercent() / Runtime.getRuntime().availableProcessors()) * 100 * 100)) / 100d);
+        } catch (SigarException ignored) {}
+
+        // Process memory information
+        ProcMem procMem = sigar.getProcMem(pid);
+        processSysModel.setMajorFaults(procMem.getMajorFaults());
+        processSysModel.setMinorFaults(procMem.getMinorFaults());
+        processSysModel.setPageFaults(procMem.getPageFaults());
+        processSysModel.setShare(processSysModel.getShare());
+        processSysModel.setSize(processSysModel.getSize());
+
+        long residentMb = procMem.getResident() / 1024 / 1024;
+        long totalMb = sigar.getMem().getTotal() / 1024 / 1024;
+        processSysModel.setMemoryUsageMb(residentMb);
+        processSysModel.setMemoryUsage(Math.round(((double) residentMb / totalMb) * 10000d) / 100d);
+
+        // Process argument information
+        try {
+            String[] procArgs = sigar.getProcArgs(pid);
+            String args = "";
+            if (procArgs.length == 1) {
+                procArgs = procArgs[0].split(" ");
+            }
+
+            for (String arg : procArgs) {
+                args = args.concat(arg.replaceAll("\\\\", "/").concat(" "));
+            }
+            processSysModel.setArgs(args.trim());
+
+            if (processSysModel.getArgs().contains("-Dname")) {
+                processSysModel.setDname(StringUtils.substringBetween(processSysModel.getArgs(), "-Dname=", " "));
+            }
+        } catch (SigarException ignored) {}
+
+        log.debug("{}", processSysModel);
+
+        return processSysModel;
+    }
+
+
+    /**
+     *
+     * @param pid
+     * @return
+     */
+    private boolean validProcess(long pid) {
+        try {
+            String name = sigar.getProcState(pid).getName();
+            String args = "";
+            try {
+                String[] procArgs = sigar.getProcArgs(pid);
+                for (String arg : procArgs) {
+                    args = arg.concat(" ");
+                }
+                args = args.trim();
+            } catch (SigarException ignored) { }
+
+            if (Constants.getConfig().containsLookupProcess(name) || Constants.getConfig().containsLookupProcess(args)) {
+                return true;
+            }
+
+        } catch (SigarException e) {
+            log.debug("{} process information get failed.", pid);
+        }
+
+        return false;
+    }
+
 
     /**
      *
@@ -209,20 +431,26 @@ public class SystemCollectorService {
                 afterObj.setRxLiveBytes(rxBytesPerSec);
                 afterObj.setTxLiveBytes(txBytesPerSec);
                 result = afterObj;
-            } else log.warn("SysModel before and after is not a valid object.");
+            } else
+                log.warn("SysModel before and after is not a valid object.");
         }
 
         return result;
     }
 
+
     /**
+     * Verify [Sigar] is initialized
      *
-     * @return
+     * @return boolean
      */
     private boolean validate() {
-        if (sigar == null) log.error("Sigar not initialized.");
+        if (sigar == null)
+            log.error("Sigar not initialized.");
+
         return sigar != null;
     }
+
 
     /**
      *
@@ -231,6 +459,7 @@ public class SystemCollectorService {
     public void setSigar(Sigar sigar) {
         this.sigar = sigar;
     }
+
 
     /**
      *
