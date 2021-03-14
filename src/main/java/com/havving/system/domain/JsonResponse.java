@@ -1,7 +1,5 @@
 package com.havving.system.domain;
 
-import com.havving.system.domain.impl.GeneralSysModel;
-
 /**
  * Created by HAVVING on 2021-03-11.
  */

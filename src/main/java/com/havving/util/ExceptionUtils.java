@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
  * Created by HAVVING on 2021-03-09.
  */
 public class ExceptionUtils {
-    private static final Logger log = LoggerFactory.getLogger(ExceptionUtils.class);
 
     public static void printExceptionLog(Class<?> clz, Throwable e) {
         final Logger logger = LoggerFactory.getLogger(clz);

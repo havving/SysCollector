@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 public class EsStore {
     @XmlAttribute
     public String masterIp;
+    @XmlAttribute
+    public String clusterName;
     @XmlAttribute(name = "destination-port")
     public int destinationPort;
 

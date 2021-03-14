@@ -1,6 +1,7 @@
 package com.havving.system.domain.xml;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import java.util.Vector;
 
@@ -22,5 +23,7 @@ public class SystemCollect {
     public Vector<String> dirList;
     @XmlElementWrapper(name = "ipAddressNameList")
     public Vector<String> ipAddressList;
+    @XmlElement(name = "engine")
+    public EsStore engine;
 
 }

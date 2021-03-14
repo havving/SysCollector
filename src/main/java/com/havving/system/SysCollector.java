@@ -8,6 +8,7 @@ package com.havving.system;
 import com.havving.Printer;
 import com.havving.system.domain.xml.Configs;
 
+import com.havving.system.global.Constants;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,8 +51,12 @@ public class SysCollector {
         }
 
         argsCheckup(args);
-
-        // add shutdown hook
+        try {
+            Constants.init();
+        } catch (Exception e) {
+            log.error("SysCollector initialized -Sigar,Gson,Services- fail\n{}", e);
+            System.exit(-1);
+        }
         shutdownHook();
         createPidFile();
         log.info("ServiceManager Run.");

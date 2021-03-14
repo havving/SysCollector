@@ -316,13 +316,14 @@ public class SystemCollectorService {
 
 
     /**
-     *
+     * get [Process] Information
      * @param pid
      * @return
      */
     private SysModel getProcess(long pid) throws SigarException {
         ProcessSysModel processSysModel = new ProcessSysModel(Constants.getConfig().host);
         NetInfo info = sigar.getNetInfo();
+        processSysModel.setHostName(info.getHostName());
 
         // Process common information
         ProcState pst = sigar.getProcState(pid);

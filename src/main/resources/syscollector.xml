@@ -11,6 +11,8 @@
         <ipAddressNameList>
             <ipAddressName>192.168.10.1</ipAddressName>
         </ipAddressNameList>
+
+        <engine destination-port="9300" clusterName="clusterName" masterIp="192.168.10.1" hotThreadCheckEnable="true"/>
     </system-collect>
 
     <proceess-collect>
