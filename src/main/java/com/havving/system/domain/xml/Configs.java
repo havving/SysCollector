@@ -24,7 +24,8 @@ public class Configs {
 
 
     /**
-     *
+     * 프로세스가 존재하는지 확인
+     * 
      * @param args
      * @return
      */
