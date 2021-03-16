@@ -62,7 +62,7 @@ public class Constants {
 
 
     /**
-     *
+     * Sigar, Gson, ES 초기화
      */
     public static synchronized void init() {
         log.trace("Global constants initialize start.");
