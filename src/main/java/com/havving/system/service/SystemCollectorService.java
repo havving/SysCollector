@@ -378,7 +378,7 @@ public class SystemCollectorService {
 
 
     /**
-     *
+     * 프로세스가 실제로 존재하는지 확인
      * @param pid
      * @return
      */
