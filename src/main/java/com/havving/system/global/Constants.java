@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.havving.system.domain.xml.Configs;
 import com.havving.system.domain.xml.EsStore;
+import com.havving.system.service.EsCollectorService;
 import com.havving.system.service.SystemCollectorService;
+import lombok.Getter;
+import lombok.Setter;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -36,6 +39,10 @@ public class Constants {
     private Configs configs;
     private SystemCollectorService systemCollectorService;
     private Client collectionClient;
+
+    @Getter
+    @Setter
+    private EsCollectorService esCollectorService;
 
     private Constants() {
     }
@@ -74,7 +81,10 @@ public class Constants {
         if (getConfig().systemCollect.engineEnable) {
             getInstance().collectionClient = initEngineTransport(getConfig().systemCollect.engine);
         }
-
+        if (getConfig().esCollect != null) {
+            EsStore esStore = getConfig().esCollect;
+            getInstance().esCollectorService = new EsCollectorService(esStore.masterIp, esStore.destinationPort);
+        }
     }
 
 

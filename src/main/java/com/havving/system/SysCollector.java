@@ -10,6 +10,8 @@ import com.havving.system.domain.xml.Configs;
 
 import com.havving.system.global.Constants;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,10 @@ public class SysCollector {
      * @param args
      */
     public static void main(String[] args) {
+        if (System.getProperty("log.root.level") != null) {
+            LogManager.getRootLogger().setLevel(Level.toLevel(System.getProperty("log.root.level")));
+        }
+
         // Initialize
         URL url = SysCollector.class.getClassLoader().getResource("syscollector.xml");
         File xmlFile = new File(url.getFile());
@@ -125,10 +131,9 @@ public class SysCollector {
 
 
     /**
-     * shutdown
+     * JVM 셧다운 전, 종료 작업 처리
      */
     private static void shutdownHook() {
-        //JVM 셧다운 전, 종료 작업 처리
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {

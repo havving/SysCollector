@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Created by HAVVING on 2021-03-18.
+-->
+
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <!-- Assume test is the database name -->
+        <property name="connection.url">jdbc:oracle:thin:@192.168.0.22:1521:HBTEST</property>
+        <property name="connection.username">havving</property>
+        <property name="connection.password">havving</property>
+        <property name="connection.shutdown">true</property>
+        <property name="connection.writedelay">0</property>
+        <property name="connection.characterEncoding">UTF-8</property>
+        <property name="connection.charSet">UTF-8</property>
+        <property name="show_sql">false</property>
+        <property name="format_sql">true</property>
+        <property name="hibernate.id.new_generator_mappings">false</property>
+        <property name="c3p0.min_size">5</property>
+        <property name="c3p0.max_size">30</property>
+        <property name="c3p0.timeout">30</property>
+        <property name="c3p0.max_statements">50</property>
+        <property name="c3p0.idle_test_period">3000</property>
+        <property name="c3p0.validate">true</property>
+    </session-factory>
+</hibernate-configuration>
