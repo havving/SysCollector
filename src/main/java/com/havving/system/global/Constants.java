@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.havving.system.domain.xml.Configs;
 import com.havving.system.domain.xml.EsStore;
 import com.havving.system.service.EsCollectorService;
+import com.havving.system.service.StoreService;
 import com.havving.system.service.SystemCollectorService;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +38,7 @@ public class Constants {
     private Gson gson;
     private Sigar sigar;
     private Configs configs;
+    private StoreService storeCollector;
     private SystemCollectorService systemCollectorService;
     private Client collectionClient;
 
@@ -109,4 +111,30 @@ public class Constants {
         return null;
     }
 
+
+    /**
+     * get SystemCollectorService
+     * @return
+     */
+    public SystemCollectorService getSystemCollector() {
+        return systemCollectorService;
+    }
+
+
+    /**
+     * get Sigar library
+     * @return
+     */
+    public Sigar getSigar() {
+        return sigar;
+    }
+
+
+    /**
+     * get StoreService
+     * @return
+     */
+    public StoreService getStoreCollector() {
+        return storeCollector;
+    }
 }
