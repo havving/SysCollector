@@ -67,6 +67,7 @@ public class SysCollector {
         createPidFile();
         log.info("ServiceManager Run.");
         // TODO ServiceManager.main(args);
+
     }
 
 

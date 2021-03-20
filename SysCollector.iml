@@ -21,7 +21,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -104,5 +104,7 @@
     <orderEntry type="library" name="Maven: org.quartz-scheduler:quartz:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: com.mchange:mchange-commons-java:0.2.15" level="project" />
     <orderEntry type="library" name="Maven: com.zaxxer:HikariCP-java7:2.4.13" level="project" />
+    <orderEntry type="library" name="Maven: org.reflections:reflections:0.9.11" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:20.0" level="project" />
   </component>
 </module>

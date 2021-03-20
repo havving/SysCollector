@@ -12,5 +12,11 @@ public class EsStore {
     public String clusterName;
     @XmlAttribute(name = "destination-port")
     public int destinationPort;
+    @XmlAttribute
+    public String ttl;
+    @XmlAttribute
+    public String indexPrefix;
+    @XmlAttribute
+    public boolean hotThreadCheckEnable = false;
 
 }

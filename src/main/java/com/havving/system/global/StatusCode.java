@@ -1,4 +1,4 @@
-package com.havving.system.domain;
+package com.havving.system.global;
 
 /**
  * Created by HAVVING on 2021-03-11.

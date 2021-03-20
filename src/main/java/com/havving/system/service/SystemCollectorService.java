@@ -1,7 +1,7 @@
 package com.havving.system.service;
 
 import com.havving.system.domain.JsonResponse;
-import com.havving.system.domain.StatusCode;
+import com.havving.system.global.StatusCode;
 import com.havving.system.domain.SysModel;
 import com.havving.system.domain.impl.*;
 import com.havving.system.global.Constants;
@@ -100,7 +100,6 @@ public class SystemCollectorService {
         if (validate()) {
             try {
                 FileSystem[] fileSystemList = sigar.getFileSystemList();
-                List<DiskSysModel> diskSysModelList = new Vector<DiskSysModel>();
 
                 List<DiskSysModel> diskArray = new Vector<DiskSysModel>();
                 for (FileSystem fileSystem : fileSystemList) {

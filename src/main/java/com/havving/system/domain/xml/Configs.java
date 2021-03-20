@@ -21,6 +21,8 @@ public class Configs {
     public List<Process> process;
     @XmlElement(name = "es-collect")
     public EsStore esCollect;
+    @XmlElement
+    public Store store;
 
 
     /**
