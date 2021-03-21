@@ -14,13 +14,14 @@ import java.io.Serializable;
 @Entity
 @Table(name = "SYS_CPU")
 public class Cpu implements Serializable, JpaObject {
+    private static final long serialVersionUID = -9066838610453382590L;
 
     @EmbeddedId
     private SimpleId id;
     @Column(name = "IDLE")
     private double idle;
     @Column(name = "SYS")
-    private double seys;
+    private double sys;
     @Column(name = "USR")
     private double usr;
     @Column(name = "WAIT")
@@ -48,12 +49,12 @@ public class Cpu implements Serializable, JpaObject {
         this.idle = idle;
     }
 
-    public double getSeys() {
-        return seys;
+    public double getSys() {
+        return sys;
     }
 
-    public void setSeys(double seys) {
-        this.seys = seys;
+    public void setSys(double sys) {
+        this.sys = sys;
     }
 
     public double getUsr() {

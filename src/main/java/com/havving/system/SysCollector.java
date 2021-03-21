@@ -7,7 +7,6 @@ package com.havving.system;
 
 import com.havving.Printer;
 import com.havving.system.domain.xml.Configs;
-
 import com.havving.system.global.Constants;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Level;
@@ -17,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -51,9 +51,13 @@ public class SysCollector {
         File xmlFile = new File(url.getFile());
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Configs.class);
+            Unmarshaller u = jaxbContext.createUnmarshaller();
+            Configs configs = (Configs) u.unmarshal(xmlFile);
+            Constants.setConfig(configs);
 
         } catch (JAXBException e) {
-            e.printStackTrace();
+            log.error("SysCollector constants xml config fail\n{}", e);
+            System.exit(-1);
         }
 
         argsCheckup(args);

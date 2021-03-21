@@ -141,6 +141,15 @@ public class Constants {
 
 
     /**
+     *
+     */
+    public static Configs setConfig(Configs config) {
+        log.trace("Config injection {}", config);
+        return getInstance().configs = config;
+    }
+
+
+    /**
      * get SystemCollectorService
      * @return
      */

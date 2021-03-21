@@ -26,24 +26,50 @@ public class ExceptionSysModel implements SysModel {
         data = new InnerException[i];
     }
 
-    public String getHost() {
-        return null;
-    }
 
+    @Override
     public String getType() {
-        return null;
+        return type;
     }
 
+    @Override
     public long getTime() {
-        return 0;
+        return new DateTime().getMillis();
     }
 
+    @Override
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    @Override
     public String getHostName() {
-        return null;
+        return hostName;
     }
 
+    @Override
     public void setHostName(String hostName) {
+        this.hostName = hostName;
+    }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public InnerException[] getData() {
+        return data;
+    }
+
+    public void setData(InnerException[] data) {
+        this.data = data;
     }
 
     private static class InnerException {
