@@ -453,7 +453,7 @@ public class SystemCollectorService {
 
 
     /**
-     *
+     * set Sigar
      * @param sigar
      */
     public void setSigar(Sigar sigar) {
