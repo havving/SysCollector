@@ -25,6 +25,7 @@ public class PrinterTest {
             Unmarshaller u = jaxbContext.createUnmarshaller();
             Configs configs = (Configs) u.unmarshal(xmlFile);
             Constants.setConfig(configs);
+            // TODO Testing...
 
         } catch (Exception e) {
             e.printStackTrace();

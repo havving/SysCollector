@@ -473,13 +473,13 @@ public class SystemCollectorService {
             generalSysModel.setCpu((CpuSysModel) getCpu());
             generalSysModel.setDisk((DiskSysModel[]) getDisk());
 
-            JsonResponse<GeneralSysModel> result = new JsonResponse<GeneralSysModel>(StatusCode.OK, generalSysModel);
+            JsonResponse<GeneralSysModel> result = new JsonResponse<>(StatusCode.OK, generalSysModel);
             log.debug("Response : {}", result);
 
             return result;
         } else {
             log.debug("Validation Error. Server Internal Error send.");
-            return new JsonResponse<GeneralSysModel>(StatusCode.SERVER_ERROR, generalSysModel);
+            return new JsonResponse<>(StatusCode.SERVER_ERROR, generalSysModel);
         }
     }
 }

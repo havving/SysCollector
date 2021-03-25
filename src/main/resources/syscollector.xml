@@ -23,6 +23,6 @@
 
     <es-collect masterIp="localhost" desetination-port="9200"/>
 
-    <store class="com.havving.system.domain.xml.EsStore" destination-port="9200" masterIp="localhost" indexPrefix="info"/>
+<!--    <store class="com.havving.system.domain.xml.EsStore" destination-port="9200" masterIp="localhost" indexPrefix="info"/>-->
 
 </Configs>
