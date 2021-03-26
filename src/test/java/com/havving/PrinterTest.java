@@ -18,14 +18,12 @@ public class PrinterTest {
     @Test
     @Ignore
     public void printConfig() {
-//        String xmlFile = IOUtils.toString(getClass().getResourceAsStream("/syscollector.xml"), "UTF-8");
         File xmlFile = new File("D:\\Project\\SysCollector\\src\\test\\resources\\syscollector.xml");
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Configs.class);
             Unmarshaller u = jaxbContext.createUnmarshaller();
             Configs configs = (Configs) u.unmarshal(xmlFile);
             Constants.setConfig(configs);
-            // TODO Testing...
 
         } catch (Exception e) {
             e.printStackTrace();
