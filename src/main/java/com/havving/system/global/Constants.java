@@ -141,7 +141,7 @@ public class Constants {
 
 
     /**
-     *
+     * config setting
      */
     public static Configs setConfig(Configs config) {
         log.trace("Config injection {}", config);
