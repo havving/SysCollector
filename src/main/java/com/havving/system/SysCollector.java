@@ -8,6 +8,8 @@ package com.havving.system;
 import com.havving.Printer;
 import com.havving.system.domain.xml.Configs;
 import com.havving.system.global.Constants;
+import com.havving.system.service.batch.BatchManager;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -28,8 +30,8 @@ import java.util.List;
 /**
  * SysCollector Main Class
  */
+@Slf4j
 public class SysCollector {
-    private static final Logger log = LoggerFactory.getLogger(SysCollector.class);
 
     /**
      * -- Main Method --
@@ -71,6 +73,7 @@ public class SysCollector {
         createPidFile();
         log.info("ServiceManager Run.");
         // TODO ServiceManager.main(args);
+        BatchManager.startBatch();
 
     }
 
@@ -156,6 +159,7 @@ public class SysCollector {
     private static void createPidFile() {
         try {
             File pidFile = new File("syscollector.pid");
+            // 기존 pid 파일이 존재하면 삭제
             if (pidFile.exists()) {
                 FileUtils.forceDelete(pidFile);
             }

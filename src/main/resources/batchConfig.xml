@@ -3,13 +3,7 @@
     Created by HAVVING on 2021-03-19.
 -->
 
-<batchconfig>
-    <scheduler name="batch">
-        <property name="org.quartz.threadPool.threadCount"><value>5</value></property>
-        <property name="org.quartz.threadPool.class"><value>org.quartz.simpl.SimpleThreadPool</value></property>
-        <property name="org.quartz.jobStore.class"><value>org.quartz.simpl.RAMJobStore</value></property>
-    </scheduler>
-
+<Batchconfig>
     <job group="batch" name="systemCollect1" triggerName="systemCollectTrigger1" cronExpression="0/5 * * * * ?" targetClass="com.havving.system.service.batch.SysCollectorBatch"/>
-    <job group="batch" name="esCollect1" triggerName="esCollectTrigger1" cronExpression="0/5 * * * * ?" targetClass="com.epozen.system.service.batch.EsCollectorBatch"/>
-</batchconfig>
+<!--    <job group="batch" name="esCollect1" triggerName="esCollectTrigger1" cronExpression="0/5 * * * * ?" targetClass="com.havving.system.service.batch.EsCollectorBatch"/>-->
+</Batchconfig>

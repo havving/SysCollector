@@ -2,10 +2,7 @@ package com.havving.system.global;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.havving.system.domain.xml.Configs;
-import com.havving.system.domain.xml.EsStore;
-import com.havving.system.domain.xml.JpaStore;
-import com.havving.system.domain.xml.Store;
+import com.havving.system.domain.xml.*;
 import com.havving.system.service.EsCollectorService;
 import com.havving.system.service.StoreService;
 import com.havving.system.service.SystemCollectorService;
@@ -48,6 +45,7 @@ public class Constants {
     private Gson gson;
     private Sigar sigar;
     private Configs configs;
+    private BatchConfig batchConfig;
     private StoreService storeCollector;
     private SystemCollectorService systemCollectorService;
     private Client collectionClient;
@@ -73,12 +71,22 @@ public class Constants {
 
 
     /**
+     * syscollector.xml config
      * @return
      */
     public static Configs getConfig() {
         return getInstance().configs;
     }
 
+
+
+    /**
+     * batchConfig.xml config
+     * @return
+     */
+    public static BatchConfig getBatchConfig() {
+        return getInstance().batchConfig;
+    }
 
     /**
      * Sigar, Gson, ES 초기화

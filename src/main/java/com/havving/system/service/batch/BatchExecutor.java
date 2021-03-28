@@ -18,9 +18,5 @@ public abstract class BatchExecutor {
         logger = LoggerFactory.getLogger(this.getClass().getName());
     }
 
-    public ORMConnection getConnection() {
-        return ormConnection;
-    }
-
     public abstract void execute() throws SQLException;
 }

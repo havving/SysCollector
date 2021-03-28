@@ -6,6 +6,7 @@ import com.havving.system.global.ORMConnection;
 import com.havving.system.service.StoreService;
 import com.havving.system.service.SystemCollectorService;
 import com.havving.util.ExceptionUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +18,8 @@ import java.util.List;
 /**
  * Created by HAVVING on 2021-03-19.
  */
+@Slf4j
 public class SysCollectorBatch extends BatchExecutor {
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
     public SysCollectorBatch(ORMConnection ormConnection) {
         super(ormConnection);
