@@ -7,6 +7,7 @@ import com.havving.system.domain.jpa.Exception;
 import com.havving.system.domain.jpa.Process;
 import com.havving.system.service.StoreService;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -18,8 +19,8 @@ import java.util.Map;
 /**
  * Created by HAVVING on 2021-03-20.
  */
+@Slf4j
 public class JpaStoreService implements StoreService {
-    private final Logger log = LoggerFactory.getLogger(JpaStoreService.class);
     private SessionFactory client;
 
     @Override

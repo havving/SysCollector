@@ -10,6 +10,7 @@ import com.havving.system.service.store.EsRestStoreService;
 import com.havving.system.service.store.JpaStoreService;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -32,8 +33,8 @@ import java.util.UUID;
 /**
  * Created by HAVVING on 2021-03-09.
  */
+@Slf4j
 public class Constants {
-    private static final Logger log = LoggerFactory.getLogger(Constants.class);
     private static final Constants constants = new Constants();
     private final Settings.Builder clientSet = Settings.builder()
             .put("action.auto_create_index", true)

@@ -1,14 +1,13 @@
 package com.havving.system.service;
 
 import com.havving.system.domain.JsonResponse;
-import com.havving.system.global.StatusCode;
 import com.havving.system.domain.SysModel;
 import com.havving.system.domain.impl.*;
 import com.havving.system.global.Constants;
+import com.havving.system.global.StatusCode;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperic.sigar.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -20,10 +19,9 @@ import static com.havving.util.ExceptionUtils.printExceptionLog;
 /**
  * Created by HAVVING on 2021-03-08.
  */
+@Slf4j
 @SysCollectorService(name = "systemCollectorService")
 public class SystemCollectorService {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
     private Sigar sigar;
     private volatile Map<String, NetworkSysModel> prevNetwork = new ConcurrentHashMap<String, NetworkSysModel>();
     private volatile Map<String, DiskSysModel> prevDisk = new ConcurrentHashMap<String, DiskSysModel>();

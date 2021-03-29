@@ -1,18 +1,17 @@
 package com.havving.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by HAVVING on 2021-03-09.
  */
+@Slf4j
 public class ExceptionUtils {
 
     public static void printExceptionLog(Class<?> clz, Throwable e) {
-        final Logger logger = LoggerFactory.getLogger(clz);
-        logger.error("Class {}-{} got exception: {}", clz.getSimpleName(), e.getCause(), e.getMessage());
+        log.error("Class {}-{} got exception: {}", clz.getSimpleName(), e.getCause(), e.getMessage());
         for (StackTraceElement elem : e.getStackTrace()) {
-            logger.debug("{}", elem);
+            log.debug("{}", elem);
         }
     }
 }
