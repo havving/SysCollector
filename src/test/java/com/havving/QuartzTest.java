@@ -32,7 +32,7 @@ public class QuartzTest {
             Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
             defaultScheduler.start();
             defaultScheduler.scheduleJob(jobDetail, trigger);
-            Thread.sleep(3 * 1000);  // Job이 실행될 수 있는 시간 여유를 준다
+            Thread.sleep(3 * 1000);  // Job이 실행될 수 있는 시간 여유 부여
 
             // 스케줄러 종료
             defaultScheduler.shutdown(true);
