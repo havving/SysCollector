@@ -6,6 +6,7 @@ package com.havving.system;
 
 
 import com.havving.Printer;
+import com.havving.system.domain.xml.BatchConfig;
 import com.havving.system.domain.xml.Configs;
 import com.havving.system.global.Constants;
 import com.havving.system.service.batch.BatchManager;
@@ -50,12 +51,19 @@ public class SysCollector {
 
         // Initialize
         URL url = SysCollector.class.getClassLoader().getResource("syscollector.xml");
+        URL url_2 = SysCollector.class.getClassLoader().getResource("batchConfig.xml");
         File xmlFile = new File(url.getFile());
+        File xmlFile_2 = new File(url_2.getFile());
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Configs.class);
             Unmarshaller u = jaxbContext.createUnmarshaller();
             Configs configs = (Configs) u.unmarshal(xmlFile);
             Constants.setConfig(configs);
+
+            JAXBContext jaxbContext_2 = JAXBContext.newInstance(BatchConfig.class);
+            Unmarshaller u_2 = jaxbContext_2.createUnmarshaller();
+            BatchConfig batchConfig = (BatchConfig) u_2.unmarshal(xmlFile_2);
+            Constants.setBatchConfig(batchConfig);
 
         } catch (JAXBException e) {
             log.error("SysCollector constants xml config fail\n{}", e);

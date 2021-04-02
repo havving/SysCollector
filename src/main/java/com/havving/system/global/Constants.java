@@ -153,6 +153,15 @@ public class Constants {
 
 
     /**
+     * config setting
+     */
+    public static BatchConfig setBatchConfig(BatchConfig batchConfig) {
+        log.trace("Config injection {}", batchConfig);
+        return getInstance().batchConfig = batchConfig;
+    }
+
+
+    /**
      * get SystemCollectorService
      * @return
      */

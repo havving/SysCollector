@@ -3,7 +3,7 @@
     Created by HAVVING on 2021-03-19.
 -->
 
-<Batchconfig>
+<batchConfig>
     <job group="batch" name="systemCollect1" triggerName="systemCollectTrigger1" cronExpression="0/5 * * * * ?" targetClass="com.havving.system.service.batch.SysCollectorBatch"/>
 <!--    <job group="batch" name="esCollect1" triggerName="esCollectTrigger1" cronExpression="0/5 * * * * ?" targetClass="com.havving.system.service.batch.EsCollectorBatch"/>-->
-</Batchconfig>
+</batchConfig>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Configs host="192.168.0.22">
+<configs host="192.168.0.22">
     <system-collect cpuEnable="false" memoryEnable="false" diskEnable="false" networkEnable="false"
                     engineEnable="false">
         <dirNameList> <!-- Windows delimiter=\, Unix delimiter=/ -->
@@ -25,4 +25,4 @@
 
 <!--    <store class="com.havving.system.domain.xml.EsStore" destination-port="9200" masterIp="localhost" indexPrefix="info"/>-->
 
-</Configs>
+</configs>
