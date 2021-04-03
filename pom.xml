@@ -122,6 +122,14 @@
             <version>0.9.11</version>
         </dependency>
 
+        <!-- MySQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.23</version>
+        </dependency>
+
+
     </dependencies>
 
 </project>

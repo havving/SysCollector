@@ -2,9 +2,9 @@ package com.havving.system.service.batch;
 
 import com.havving.system.global.ORMConnection;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.quartz.*;
+
+import java.lang.reflect.Constructor;
 
 /**
  * Created by HAVVING on 2021-03-28.
@@ -14,10 +14,34 @@ import org.quartz.JobExecutionException;
 @Slf4j
 public class JobExecutor implements Job {
 
+    private String targetClass;
     private ORMConnection connection = null;
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
+        JobDetail detail = context.getJobDetail();
+        try {
+            JobDataMap dataMap = detail.getJobDataMap();
+            targetClass = dataMap.get("targetClass").toString();
+
+            Class<?> jobClass = JobExecutor.class.getClassLoader().loadClass(targetClass);
+            Constructor<?> constructor = jobClass.getConstructor(ORMConnection.class);
+
+            BatchExecutor executor = (BatchExecutor) constructor.newInstance(connection);
+            if (connection != null) connection.beginTransaction();
+            executor.execute();
+            if (connection != null) connection.commit();
+
+        } catch (Throwable t) {
+            log.error("Error while executing JobExecutor " + detail.getKey() + ", " + targetClass, t);
+            if (connection != null) connection.rollback();
+
+        } finally {
+            if (connection != null) {
+                connection.close();
+                connection = null;
+            }
+        }
 
     }
 }

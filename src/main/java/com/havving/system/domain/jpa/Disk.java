@@ -19,7 +19,7 @@ public class Disk implements Serializable, JpaObject {
     private double queue;
     @Column(name = "READ_LIVE_BYTES")
     private long readLiveBytes;
-    @Column(name = "READS")
+    @Column(name = "READ_S")
     private long reads;
     @Column(name = "SERVICE_TIME")
     private double serviceTime;

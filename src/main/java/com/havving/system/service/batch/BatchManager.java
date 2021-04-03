@@ -26,10 +26,13 @@ public class BatchManager {
 
             JobBuilder jobBuilder = JobBuilder.newJob(JobExecutor.class).usingJobData("targetClass", targetClass)
                     .usingJobData("commandName", jobName).withIdentity(jobName, groupName);
+
             // Job 구현 내용이 담긴 JobExecutor로 JobDetail 생성
             JobDetail jobDetail = jobBuilder.build();
+
             // 실행 시점을 결정하는 Trigger 생성
-            CronTrigger trigger = newTrigger().withIdentity(triggerName, groupName).withSchedule(cronSchedule(cronExpression)).build();
+            CronTrigger trigger = newTrigger().withIdentity(triggerName, groupName)
+                    .withSchedule(cronSchedule(cronExpression)).build();
 
             // 스케줄러 실행 및 JobDetail과 Trigger 정보로 스케줄링
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
