@@ -1,10 +1,5 @@
 package com.havving.system;
 
-/**
- * Created by HAVVING on 2021-03-02.
- */
-
-
 import com.havving.Printer;
 import com.havving.system.domain.xml.BatchConfig;
 import com.havving.system.domain.xml.Configs;
@@ -27,8 +22,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
 
-
 /**
+ * Created by HAVVING on 2021-03-02.
  * SysCollector Main Class
  */
 @Slf4j
