@@ -9,7 +9,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
-        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <!-- Assume test is the database name -->
         <property name="connection.url">jdbc:mysql://localhost:3306</property>
         <property name="connection.username">root</property>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configs host="192.168.0.22">
-    <system-collect cpuEnable="false" memoryEnable="false" diskEnable="false" networkEnable="false"
+    <system-collect cpuEnable="true" memoryEnable="false" diskEnable="false" networkEnable="false"
                     engineEnable="false">
         <dirNameList> <!-- Windows delimiter=\, Unix delimiter=/ -->
             <dirname>c:\</dirname>

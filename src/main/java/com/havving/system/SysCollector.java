@@ -3,14 +3,13 @@ package com.havving.system;
 import com.havving.Printer;
 import com.havving.system.domain.xml.BatchConfig;
 import com.havving.system.domain.xml.Configs;
+import com.havving.system.global.ConnectionFactory;
 import com.havving.system.global.Constants;
 import com.havving.system.service.batch.BatchManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -75,7 +74,7 @@ public class SysCollector {
         shutdownHook();
         createPidFile();
         log.info("ServiceManager Run.");
-        // TODO ServiceManager.main(args);
+        ConnectionFactory.getConnFactory().init();
         BatchManager.startBatch();
 
     }

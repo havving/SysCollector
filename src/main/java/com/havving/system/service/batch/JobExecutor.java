@@ -1,5 +1,6 @@
 package com.havving.system.service.batch;
 
+import com.havving.system.global.ConnectionFactory;
 import com.havving.system.global.ORMConnection;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
@@ -26,6 +27,8 @@ public class JobExecutor implements Job {
 
             Class<?> jobClass = JobExecutor.class.getClassLoader().loadClass(targetClass);
             Constructor<?> constructor = jobClass.getConstructor(ORMConnection.class);
+
+            connection = ConnectionFactory.getConnFactory().getOpenConnection();
 
             BatchExecutor executor = (BatchExecutor) constructor.newInstance(connection);
             if (connection != null) connection.beginTransaction();
