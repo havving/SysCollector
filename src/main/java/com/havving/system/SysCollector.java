@@ -74,6 +74,7 @@ public class SysCollector {
         shutdownHook();
         createPidFile();
         log.info("ServiceManager Run.");
+        // TDOO 추후 재정비
         ConnectionFactory.getConnFactory().init();
         BatchManager.startBatch();
 
