@@ -40,4 +40,4 @@
 >> * 기 설치되어 있는 DB에 해당 타입의 데이터 저장
 >> * hibernate-path : hibernate configuration 파일 경로 지정
 >> * ddl 기능을 활성화 하지 않을 경우, db/ddl.sql 파일을 실행시켜야 함
->> * 제공되는 SQL의 경우, Oracle을 기준으로 작성되어 있음
+>> * 제공되는 SQL의 경우, MySQL을 기준으로 작성되어 있음

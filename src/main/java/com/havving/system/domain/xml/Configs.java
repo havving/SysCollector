@@ -1,9 +1,6 @@
 package com.havving.system.domain.xml;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 /**
@@ -21,7 +18,8 @@ public class Configs {
     public List<Process> process;
     @XmlElement(name = "es-collect")
     public EsStore esCollect;
-    @XmlElement(type = Object.class)
+    @XmlAnyElement
+    // TODO How to interface to JAXB
     public Store store;
 
 

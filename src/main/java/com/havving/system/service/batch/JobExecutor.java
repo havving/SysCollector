@@ -35,8 +35,8 @@ public class JobExecutor implements Job {
             executor.execute();
             if (connection != null) connection.commit();
 
-        } catch (Throwable t) {
-            log.error("Error while executing JobExecutor " + detail.getKey() + ", " + targetClass, t);
+        } catch (Exception e) {
+            log.error("Error while executing JobExecutor " + detail.getKey() + ", " + targetClass, e);
             if (connection != null) connection.rollback();
 
         } finally {

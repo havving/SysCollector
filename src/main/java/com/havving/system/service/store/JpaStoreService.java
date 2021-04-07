@@ -6,6 +6,7 @@ import com.havving.system.domain.jpa.*;
 import com.havving.system.domain.jpa.Exception;
 import com.havving.system.domain.jpa.Process;
 import com.havving.system.service.StoreService;
+import com.havving.system.service.SysCollectorService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -20,6 +21,7 @@ import java.util.Map;
  * Created by HAVVING on 2021-03-20.
  */
 @Slf4j
+@SysCollectorService(name = "jpaStoreService")
 public class JpaStoreService implements StoreService {
     private SessionFactory client;
 
@@ -33,7 +35,6 @@ public class JpaStoreService implements StoreService {
     @SneakyThrows
     @Override
     public void store(SysModel model) {
-        // TODO save model
         log.debug("Jpa Storing Object: {}", model);
         try (Session sess = client.openSession()) {
             sess.beginTransaction();
@@ -138,7 +139,7 @@ public class JpaStoreService implements StoreService {
                     break;
 
                 default:
-                    throw new IllegalAccessException("Sysmodel type is not matched.");
+                    throw new IllegalAccessException("model type is not matched.");
             }
             sess.getTransaction().commit();
         }

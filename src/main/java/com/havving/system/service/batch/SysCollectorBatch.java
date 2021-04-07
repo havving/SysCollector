@@ -78,10 +78,14 @@ public class SysCollectorBatch extends BatchExecutor {
             }
         }
 
+        // ES Store
         StoreService esCollectorService = Constants.getInstance().getStoreCollector();
         if (Constants.getConfig().systemCollect.engineEnable) {
             // TODO getEngineStats
         }
+
+        // JPA Store
+        StoreService jpaStoreService = Constants.getInstance().getStoreCollector();
 
         List<SysModel> models = new ArrayList<SysModel>();
         if (cpu != null) models.add(cpu);
@@ -96,7 +100,7 @@ public class SysCollectorBatch extends BatchExecutor {
         }
 
         if (models.size() > 0) {
-            esCollectorService.store(models);
+            jpaStoreService.store(models);
             log.info("{} columns updated.", models.size());
         } else log.info("Collection data size '0'. Information does not be sent.");
     }

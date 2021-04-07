@@ -23,6 +23,7 @@
 
     <es-collect masterIp="localhost" desetination-port="9200"/>
 
+    <store class="com.havving.system.domain.xml.JpaStore" hibernate-path="hibernate.cfg.xml"/>
 <!--    <store class="com.havving.system.domain.xml.EsStore" destination-port="9200" masterIp="localhost" indexPrefix="info"/>-->
 
 </configs>
