@@ -1,7 +1,5 @@
 package com.havving.system.domain.jpa;
 
-import com.havving.system.domain.JpaObject;
-
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -13,7 +11,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "SYS_CPU")
-public class Cpu implements Serializable, JpaObject {
+public class Cpu implements Serializable {
     private static final long serialVersionUID = -9066838610453382590L;
 
     @EmbeddedId

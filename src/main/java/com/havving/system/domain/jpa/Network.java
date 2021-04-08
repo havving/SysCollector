@@ -1,7 +1,5 @@
 package com.havving.system.domain.jpa;
 
-import com.havving.system.domain.JpaObject;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,7 +8,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "SYS_NETWORK")
-public class Network implements Serializable, JpaObject {
+public class Network implements Serializable {
     private static final long serialVersionUID = 3417001903210736081L;
 
     @EmbeddedId

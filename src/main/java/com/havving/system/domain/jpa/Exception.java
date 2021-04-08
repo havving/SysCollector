@@ -1,7 +1,5 @@
 package com.havving.system.domain.jpa;
 
-import com.havving.system.domain.JpaObject;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +11,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "SYS_EXCEPTION")
-public class Exception implements Serializable, JpaObject {
+public class Exception implements Serializable {
     private static final long serialVersionUID = 1783270528883085659L;
 
     @Id

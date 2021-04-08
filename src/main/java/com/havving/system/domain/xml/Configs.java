@@ -18,8 +18,8 @@ public class Configs {
     public List<Process> process;
     @XmlElement(name = "es-collect")
     public EsStore esCollect;
-    @XmlAnyElement
     // TODO How to interface to JAXB
+    @XmlAnyElement
     public Store store;
 
 

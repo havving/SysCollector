@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 /**
  * Created by HAVVING on 2021-03-06.
  */
-public class EsStore {
+public class EsStore extends Store {
     @XmlAttribute
     public String masterIp;
     @XmlAttribute

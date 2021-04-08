@@ -1,7 +1,5 @@
 package com.havving.system.domain.jpa;
 
-import com.havving.system.domain.JpaObject;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,7 +8,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "SYS_DISK")
-public class Disk implements Serializable, JpaObject {
+public class Disk implements Serializable {
     private static final long serialVersionUID = 445025753442713398L;
 
     @EmbeddedId

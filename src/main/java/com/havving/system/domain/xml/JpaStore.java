@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 /**
  * Created by HAVVING on 2021-03-20.
  */
-public class JpaStore implements Store {
+public class JpaStore extends Store {
     @XmlAttribute(name = "hibernate-path")
     public String hibernatePath;
 }
