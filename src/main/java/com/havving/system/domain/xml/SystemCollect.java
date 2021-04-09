@@ -3,6 +3,8 @@ package com.havving.system.domain.xml;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -20,9 +22,11 @@ public class SystemCollect {
     @XmlAttribute
     public boolean engineEnable = false;
     @XmlElementWrapper(name = "dirNameList")
-    public Vector<String> dirList;
+    @XmlElement(name = "dirName")
+    public List<String> dirList;
     @XmlElementWrapper(name = "ipAddressNameList")
-    public Vector<String> ipAddressList;
+    @XmlElement(name = "ipAddressName")
+    public List<String> ipAddressList;
     @XmlElement(name = "engine")
     public EsStore engine;
 

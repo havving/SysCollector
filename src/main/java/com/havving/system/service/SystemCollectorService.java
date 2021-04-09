@@ -162,7 +162,7 @@ public class SystemCollectorService {
      */
     public SysModel[] getNetworks() {
         if (validate()) {
-            Vector<String> ipAddressList = Constants.getConfig().systemCollect.ipAddressList;
+            List<String> ipAddressList = Constants.getConfig().systemCollect.ipAddressList;
             SysModel[] result = new NetworkSysModel[ipAddressList.size()];
             for (int i = 0; i < ipAddressList.size(); i++) {
                 String netInterface = ipAddressList.get(i);

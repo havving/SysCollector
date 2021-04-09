@@ -4,8 +4,8 @@
     <system-collect cpuEnable="true" memoryEnable="false" diskEnable="false" networkEnable="false"
                     engineEnable="false">
         <dirNameList> <!-- Windows delimiter=\, Unix delimiter=/ -->
-            <dirname>c:\</dirname>
-            <dirname>d:\</dirname>
+            <dirName>c:\</dirName>
+            <dirName>d:\</dirName>
         </dirNameList>
 
         <ipAddressNameList>
@@ -17,13 +17,14 @@
 
     <proceess-collect>
         <!-- threshold value type: CPU - %, MEMORY - MB -->
-        <process name="java"/>
-
+        <process name="java" kill="true" killType="CPU" threshold="20" killCount="3"/>
+        <process name="javac" kill="true" killType="CPU" threshold="20" killCount="3"/>
     </proceess-collect>
 
     <es-collect masterIp="localhost" desetination-port="9200"/>
 
     <store class="com.havving.system.domain.xml.JpaStore" hibernate-path="hibernate.cfg.xml"/>
 <!--    <store class="com.havving.system.domain.xml.EsStore" destination-port="9200" masterIp="localhost" indexPrefix="info"/>-->
+<!--    <sotre class="com.havving.system.domain.xml.RestStore" url="http://192.168.0.22:9200/admin/collector/insert/" />-->
 
 </configs>

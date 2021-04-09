@@ -93,7 +93,7 @@ public class Constants {
         getInstance().gson = new GsonBuilder().disableHtmlEscaping().create();
         getInstance().systemCollectorService = new SystemCollectorService();
 
-        Store store = getConfig().store;
+        Store store = getConfig().jpaStore;
         if (store instanceof EsStore) {
             getInstance().storeCollector = new EsRestStoreService();
         } else if (store instanceof JpaStore) {

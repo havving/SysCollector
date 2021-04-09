@@ -19,7 +19,7 @@ public class EsRestStoreService implements StoreService {
 
 
     public EsRestStoreService() {
-        storeConfig = (EsStore) Constants.getConfig().store;
+//        storeConfig = (EsStore) Constants.getConfig().store;
         client = new HttpProvider(storeConfig.masterIp, storeConfig.destinationPort);
     }
 
