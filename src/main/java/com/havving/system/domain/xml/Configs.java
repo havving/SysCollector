@@ -10,25 +10,32 @@ import java.util.List;
 
 @XmlRootElement
 public class Configs {
-    Configs() {
+/*    public Configs() {
         jpaStore = new JpaStore();
         esStore = new EsStore();
-    }
+    }*/
 
     @XmlAttribute
     public String host;
     @XmlElement(name = "system-collect")
     public SystemCollect systemCollect;
-    // TODO How to <process> list
     @XmlElementWrapper(name = "process-collect")
     @XmlElement(name = "process", type = Process.class)
     public List<Process> process;
     @XmlElement(name = "es-collect")
     public EsStore esCollect;
-    @XmlElement(type = Object.class)
+/*
+    @XmlElement(name = "store", type = JpaStore.class)
     public Store jpaStore;
-    @XmlElement(type = Object.class)
+    @XmlElement(name = "store", type = EsStore.class)
     public Store esStore;
+*/
+    // TODO Store는 1개만 정의할 것인가?
+    @XmlElements({
+            @XmlElement(name = "store", type = EsStore.class),
+            @XmlElement(name = "store", type = JpaStore.class)
+    })
+    public List<Store> store;
 
 
     /**

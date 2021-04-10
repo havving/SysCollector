@@ -15,13 +15,13 @@
         <engine destination-port="9300" clusterName="clusterName" masterIp="192.168.10.1" hotThreadCheckEnable="true"/>
     </system-collect>
 
-    <proceess-collect>
+    <process-collect>
         <!-- threshold value type: CPU - %, MEMORY - MB -->
         <process name="java" kill="true" killType="CPU" threshold="20" killCount="3"/>
         <process name="javac" kill="true" killType="CPU" threshold="20" killCount="3"/>
-    </proceess-collect>
+    </process-collect>
 
-    <es-collect masterIp="localhost" desetination-port="9200"/>
+    <es-collect masterIp="localhost" destination-port="9200"/>
 
     <store class="com.havving.system.domain.xml.JpaStore" hibernate-path="hibernate.cfg.xml"/>
 <!--    <store class="com.havving.system.domain.xml.EsStore" destination-port="9200" masterIp="localhost" indexPrefix="info"/>-->

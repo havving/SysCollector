@@ -3,6 +3,8 @@ package com.havving.system;
 import com.havving.Printer;
 import com.havving.system.domain.xml.BatchConfig;
 import com.havving.system.domain.xml.Configs;
+import com.havving.system.domain.xml.EsStore;
+import com.havving.system.domain.xml.JpaStore;
 import com.havving.system.global.ConnectionFactory;
 import com.havving.system.global.Constants;
 import com.havving.system.service.batch.BatchManager;
@@ -49,7 +51,7 @@ public class SysCollector {
         File xmlFile = new File(url.getFile());
         File xmlFile_2 = new File(url_2.getFile());
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Configs.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(Configs.class, JpaStore.class, EsStore.class);
             Unmarshaller u = jaxbContext.createUnmarshaller();
             Configs configs = (Configs) u.unmarshal(xmlFile);
             Constants.setConfig(configs);
