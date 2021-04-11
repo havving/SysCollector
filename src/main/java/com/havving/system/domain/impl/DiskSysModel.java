@@ -28,6 +28,7 @@ public class DiskSysModel implements SysModel {
         this.time = new DateTime().getMillis();
     }
 
+    @Override
     public String getHost() {
         return host;
     }
@@ -36,14 +37,17 @@ public class DiskSysModel implements SysModel {
         this.host = host;
     }
 
+    @Override
     public String getHostName() {
         return hostName;
     }
 
+    @Override
     public void setHostName(String hostName) {
         this.hostName = hostName;
     }
 
+    @Override
     public String getType() {
         return this.type;
     }
@@ -56,6 +60,7 @@ public class DiskSysModel implements SysModel {
         this.name = name;
     }
 
+    @Override
     public long getTime() {
         return this.time;
     }

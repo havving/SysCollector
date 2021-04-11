@@ -2,9 +2,9 @@ package com.havving.system.domain.jpa;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Created by HAVVING on 2021-03-20.
@@ -14,23 +14,23 @@ import java.io.Serializable;
 public class SimpleId implements Serializable {
 
     @Column(name = "DATE_TIME")
-    private long dateTime;
+    private LocalDateTime dateTime;
     @Column(name = "HOST_NAME")
     private String hostName;
 
     public SimpleId() {
     }
 
-    public SimpleId(long dateTime, String hostName) {
+    public SimpleId(LocalDateTime dateTime, String hostName) {
         this.dateTime = dateTime;
         this.hostName = hostName;
     }
 
-    public long getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(long dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 

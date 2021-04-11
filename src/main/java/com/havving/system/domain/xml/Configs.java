@@ -30,7 +30,7 @@ public class Configs {
     @XmlElement(name = "store", type = EsStore.class)
     public Store esStore;
 */
-    // TODO Store는 1개만 정의할 것인가?
+    // Store는 1개만 정의할 수 있다.
     @XmlElements({
             @XmlElement(name = "store", type = EsStore.class),
             @XmlElement(name = "store", type = JpaStore.class)

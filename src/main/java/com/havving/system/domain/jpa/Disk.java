@@ -2,6 +2,7 @@ package com.havving.system.domain.jpa;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Created by HAVVING on 2021-03-21.
@@ -141,7 +142,7 @@ public class Disk implements Serializable {
         public DiskId() {
         }
 
-        public DiskId(long dateTime, String hostName, String diskName) {
+        public DiskId(LocalDateTime dateTime, String hostName, String diskName) {
             super.setDateTime(dateTime);
             super.setHostName(hostName);
             this.diskName = diskName;

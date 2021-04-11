@@ -2,6 +2,7 @@ package com.havving.system.domain.jpa;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Created by HAVVING on 2021-03-21.
@@ -210,7 +211,7 @@ public class Network implements Serializable {
 
         public NetworkId() {}
 
-        public NetworkId(long dateTime, String hostName, String nicName) {
+        public NetworkId(LocalDateTime dateTime, String hostName, String nicName) {
             super.setDateTime(dateTime);
             super.setHostName(hostName);
             this.nicName = nicName;

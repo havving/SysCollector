@@ -14,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -36,13 +37,14 @@ public class JpaStoreService implements StoreService {
     @Override
     public void store(SysModel model) {
         log.debug("Jpa Storing Object: {}", model);
+        LocalDateTime now = LocalDateTime.now();
         try (Session sess = client.openSession()) {
             sess.beginTransaction();
             switch (model.getType()) {
                 case "cpu":
                     CpuSysModel c = (CpuSysModel) model;
                     Cpu cpu = new Cpu();
-                    SimpleId id = new SimpleId(model.getTime(), model.getHost());
+                    SimpleId id = new SimpleId(now, model.getHost());
                     cpu.setId(id);
                     cpu.setIdle(c.getIdle());
                     if (c.getLoadAverage() != null) {
@@ -63,7 +65,7 @@ public class JpaStoreService implements StoreService {
                     mem.setActualFree(m.getActualFree());
                     mem.setActualUsed(m.getActualUsed());
                     mem.setFreePercent(m.getFreePercent());
-                    mem.setId(new SimpleId(m.getTime(), m.getHost()));
+                    mem.setId(new SimpleId(now, m.getHost()));
                     mem.setRam(m.getRam());
                     mem.setSwapFree(m.getSwapFree());
                     mem.setSwapPageIn(m.getSwapPageIn());
@@ -74,11 +76,28 @@ public class JpaStoreService implements StoreService {
                     sess.save(mem);
                     break;
 
+                case "disk":
+                    DiskSysModel d = (DiskSysModel) model;
+                    Disk disk = new Disk();
+                    disk.setId(new Disk.DiskId(now, d.getHost(), d.getName()));
+                    disk.setQueue(d.getQueue());
+                    disk.setServiceTime(d.getServiceTime());
+                    disk.setReadLiveBytes(d.getReadLiveBytes());
+                    disk.setReads(d.getReads());
+                    disk.setWriteLiveBytes(d.getWriteLiveBytes());
+                    disk.setWrites(d.getWrites());
+                    disk.setTotalBytes(d.getTotalBytes());
+                    disk.setFreeBytes(d.getFreeBytes());
+                    disk.setUsedBytes(d.getUsedBytes());
+                    disk.setUsedPercent(d.getUsedPercent());
+                    sess.save(disk);
+                    break;
+
                 case "network":
                     NetworkSysModel n = (NetworkSysModel) model;
                     Network net = new Network();
                     net.setBroadcast(n.getBroadCast());
-                    net.setId(new Network.NetworkId(n.getTime(), n.getHost(), n.getName()));
+                    net.setId(new Network.NetworkId(now, n.getHost(), n.getName()));
                     net.setMacAddr(n.getMacAddr());
                     net.setMetric(n.getMetric());
                     net.setMtu(n.getMtu());
@@ -112,23 +131,6 @@ public class JpaStoreService implements StoreService {
                     proc.setState(String.valueOf(p.getState()));
                     proc.setThreads(p.getThreads());
                     sess.save(proc);
-                    break;
-
-                case "disk":
-                    DiskSysModel d = (DiskSysModel) model;
-                    Disk disk = new Disk();
-                    disk.setId(new Disk.DiskId(d.getTime(), d.getHost(), d.getName()));
-                    disk.setQueue(d.getQueue());
-                    disk.setServiceTime(d.getServiceTime());
-                    disk.setReadLiveBytes(d.getReadLiveBytes());
-                    disk.setReads(d.getReads());
-                    disk.setWriteLiveBytes(d.getWriteLiveBytes());
-                    disk.setWrites(d.getWrites());
-                    disk.setTotalBytes(d.getTotalBytes());
-                    disk.setFreeBytes(d.getFreeBytes());
-                    disk.setUsedBytes(d.getUsedBytes());
-                    disk.setUsedPercent(d.getUsedPercent());
-                    sess.save(disk);
                     break;
 
                 case "exception":

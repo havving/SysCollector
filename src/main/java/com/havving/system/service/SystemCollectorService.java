@@ -78,12 +78,61 @@ public class SystemCollectorService {
             } catch (SigarException e) {
                 printExceptionLog(getClass(), e);
                 return new ExceptionSysModel(Constants.getConfig().host, e);
-            } catch (UnsatisfiedLinkError e) {  //
+            } catch (UnsatisfiedLinkError e) {
                 printExceptionLog(getClass(), e);
                 log.info("CPU Collector failed");
                 return null;
             }
 
+        } else
+            return null;
+    }
+
+
+    /**
+     * get [Memory] Information
+     *
+     * @return MemorySysModel
+     */
+    public SysModel getMemory() {
+        if (validate()) {
+            MemorySysModel memorySysModel = new MemorySysModel(Constants.getConfig().host);
+            try {
+                Mem mem = sigar.getMem();
+                Swap swap = sigar.getSwap();
+                memorySysModel.setSwapFree(swap.getFree() / 1024 / 1024);
+                memorySysModel.setSwapTotal(swap.getTotal() / 1024 / 1024);
+                memorySysModel.setSwapUsed(swap.getUsed() / 1024 / 1024);
+                memorySysModel.setSwapPageIn(swap.getPageIn() / 1024 / 1024);
+                memorySysModel.setSwapPageOut(swap.getPageOut() / 1024 / 1024);
+                memorySysModel.setActualFree(mem.getActualFree() / 1024 / 1024);
+                memorySysModel.setActualUsed(mem.getActualUsed() / 1024 / 1024);
+                memorySysModel.setFreePercent(Math.round(mem.getFreePercent() * 100d) / 100d);
+                memorySysModel.setUsedPercent(Math.round(mem.getUsedPercent() * 100d) / 100d);
+                memorySysModel.setRam(mem.getRam() / 1024 / 1024);
+                memorySysModel.setTotal(mem.getTotal() / 1024 / 1024);
+                memorySysModel.setHostName(this.getHostName());
+
+                String hostName = null;
+                try {
+                    InetAddress localhost = InetAddress.getLocalHost();
+                    hostName = localhost.getHostName();
+                } catch (UnknownHostException e) {
+                    log.error("", e);
+                }
+                memorySysModel.setHostName(hostName != null ? hostName : "UnKnown");
+                log.debug("{}", memorySysModel);
+
+                return memorySysModel;
+
+            } catch (SigarException e) {
+                printExceptionLog(getClass(), e);
+                return new ExceptionSysModel(Constants.getConfig().host, e);
+            } catch (UnsatisfiedLinkError e) {
+                printExceptionLog(getClass(), e);
+                log.info("Memory collect failed.");
+                return null;
+            }
         } else
             return null;
     }
@@ -228,55 +277,6 @@ public class SystemCollectorService {
             } catch (SigarException e) {
                 printExceptionLog(getClass(), e);
                 return new ExceptionSysModel(Constants.getConfig().host, e);
-            }
-        } else
-            return null;
-    }
-
-
-    /**
-     * get [Memory] Information
-     *
-     * @return MemorySysModel
-     */
-    public SysModel getMemory() {
-        if (validate()) {
-            MemorySysModel memorySysModel = new MemorySysModel(Constants.getConfig().host);
-            try {
-                Mem mem = sigar.getMem();
-                Swap swap = sigar.getSwap();
-                memorySysModel.setSwapFree(swap.getFree() / 1024 / 1024);
-                memorySysModel.setSwapTotal(swap.getTotal() / 1024 / 1024);
-                memorySysModel.setSwapUsed(swap.getUsed() / 1024 / 1024);
-                memorySysModel.setSwapPageIn(swap.getPageIn() / 1024 / 1024);
-                memorySysModel.setSwapPageOut(swap.getPageOut() / 1024 / 1024);
-                memorySysModel.setActualFree(mem.getActualFree() / 1024 / 1024);
-                memorySysModel.setActualUsed(mem.getActualUsed() / 1024 / 1024);
-                memorySysModel.setFreePercent(Math.round(mem.getFreePercent() * 100d) / 100d);
-                memorySysModel.setUsedPercent(Math.round(mem.getUsedPercent() * 100d) / 100d);
-                memorySysModel.setRam(mem.getRam() / 1024 / 1024);
-                memorySysModel.setTotal(mem.getTotal() / 1024 / 1024);
-                memorySysModel.setHostName(this.getHostName());
-
-                String hostName = null;
-                try {
-                    InetAddress localhost = InetAddress.getLocalHost();
-                    hostName = localhost.getHostName();
-                } catch (UnknownHostException e) {
-                    log.error("", e);
-                }
-                memorySysModel.setHostName(hostName != null ? hostName : "UnKnown");
-                log.debug("{}", memorySysModel);
-
-                return memorySysModel;
-
-            } catch (SigarException e) {
-                printExceptionLog(getClass(), e);
-                return new ExceptionSysModel(Constants.getConfig().host, e);
-            } catch (UnsatisfiedLinkError e) {
-                printExceptionLog(getClass(), e);
-                log.info("Memory collect failed.");
-                return null;
             }
         } else
             return null;

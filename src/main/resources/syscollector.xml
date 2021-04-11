@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configs host="192.168.0.22">
-    <system-collect cpuEnable="true" memoryEnable="false" diskEnable="false" networkEnable="false"
+    <system-collect cpuEnable="false" memoryEnable="false" diskEnable="false" networkEnable="false"
                     engineEnable="false">
         <dirNameList> <!-- Windows delimiter=\, Unix delimiter=/ -->
-            <dirName>c:\</dirName>
-            <dirName>d:\</dirName>
+            <dirName>C:\</dirName>
+            <dirName>D:\</dirName>
         </dirNameList>
 
         <ipAddressNameList>
-            <ipAddressName>192.168.10.1</ipAddressName>
+            <ipAddressName>192.168.0.22</ipAddressName>
         </ipAddressNameList>
 
         <engine destination-port="9300" clusterName="clusterName" masterIp="192.168.10.1" hotThreadCheckEnable="true"/>
@@ -17,14 +17,14 @@
 
     <process-collect>
         <!-- threshold value type: CPU - %, MEMORY - MB -->
-        <process name="java" kill="true" killType="CPU" threshold="20" killCount="3"/>
-        <process name="javac" kill="true" killType="CPU" threshold="20" killCount="3"/>
+<!--        <process name="java" kill="true" killType="CPU" threshold="20" killCount="3"/>-->
+<!--        <process name="javac" kill="true" killType="CPU" threshold="20" killCount="3"/>-->
     </process-collect>
 
-    <es-collect masterIp="localhost" destination-port="9200"/>
+<!--    <es-collect masterIp="localhost" destination-port="9200"/>-->
 
     <store class="com.havving.system.domain.xml.JpaStore" hibernate-path="hibernate.cfg.xml"/>
-<!--    <store class="com.havving.system.domain.xml.EsStore" destination-port="9200" masterIp="localhost" indexPrefix="info"/>-->
+    <store class="com.havving.system.domain.xml.EsStore" destination-port="9200" masterIp="localhost" indexPrefix="info"/>
 <!--    <sotre class="com.havving.system.domain.xml.RestStore" url="http://192.168.0.22:9200/admin/collector/insert/" />-->
 
 </configs>

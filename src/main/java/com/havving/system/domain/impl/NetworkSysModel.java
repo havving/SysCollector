@@ -37,6 +37,7 @@ public class NetworkSysModel implements SysModel {
         this.time = new DateTime().getMillis();
     }
 
+    @Override
     public String getHost() {
         return host;
     }
@@ -45,18 +46,22 @@ public class NetworkSysModel implements SysModel {
         this.host = host;
     }
 
+    @Override
     public String getHostName() {
         return hostName;
     }
 
+    @Override
     public void setHostName(String hostName) {
         this.hostName = hostName;
     }
 
+    @Override
     public String getType() {
         return type;
     }
 
+    @Override
     public long getTime() {
         return this.time;
     }

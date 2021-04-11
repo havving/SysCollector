@@ -5,6 +5,7 @@ import com.havving.system.global.Constants;
 import com.havving.system.global.ORMConnection;
 import com.havving.system.service.StoreService;
 import com.havving.system.service.SystemCollectorService;
+import com.havving.system.service.store.EsStoreService;
 import com.havving.util.ExceptionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -82,6 +83,7 @@ public class SysCollectorBatch extends BatchExecutor {
         StoreService esCollectorService = Constants.getInstance().getStoreCollector();
         if (Constants.getConfig().systemCollect.engineEnable) {
             // TODO getEngineStats
+            engineStats = ((EsStoreService) esCollectorService).getEngineStats();
         }
 
         // JPA Store
