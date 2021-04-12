@@ -4,6 +4,7 @@
 -->
 
 <batchConfig>
-    <job group="batch" name="systemCollect1" triggerName="systemCollectTrigger1" cronExpression="0/5 * * * * ?" targetClass="com.havving.system.service.batch.SysCollectorBatch"/>
-<!--    <job group="batch" name="esCollect1" triggerName="esCollectTrigger1" cronExpression="0/5 * * * * ?" targetClass="com.havving.system.service.batch.EsCollectorBatch"/>-->
+    <job group="batch" name="systemCollect1" triggerName="systemCollectTrigger1" cronExpression="0/10 * * * * ?" targetClass="com.havving.system.service.batch.SysCollectorBatch"/>
+    <job group="batch" name="processLookup1" triggerName="processLookupTrigger1" cronExpression="0/10 * * * * ?" targetClass="com.havving.system.service.batch.ProcessLookupBatch"/>
+<!--    <job group="batch" name="esCollect1" triggerName="esCollectTrigger1" cronExpression="0/10 * * * * ?" targetClass="com.havving.system.service.batch.EsCollectorBatch"/>-->
 </batchConfig>

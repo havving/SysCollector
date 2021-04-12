@@ -122,7 +122,7 @@ public class JpaStoreService implements StoreService {
                     proc.setArgs(p.getArgs());
                     proc.setCpuUsage(p.getCpuUsage());
                     proc.setDname(p.getDname());
-                    proc.setId(new Process.ProcessId(p.getTime(), p.getHost(), p.getPid()));
+                    proc.setId(new Process.ProcessId(now, p.getHost(), p.getPid()));
                     proc.setMemoryUsage(p.getMemoryUsage());
                     proc.setMemoryUsageMb(p.getMemoryUsageMb());
                     proc.setPpid(p.getPpid());

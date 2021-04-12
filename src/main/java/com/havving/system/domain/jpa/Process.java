@@ -2,6 +2,7 @@ package com.havving.system.domain.jpa;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Created by HAVVING on 2021-03-21.
@@ -140,8 +141,8 @@ public class Process implements Serializable {
 
         public ProcessId() {}
 
-        public ProcessId(long dateTime, String hostName, long pid) {
-//            super.setDateTime(dateTime);
+        public ProcessId(LocalDateTime dateTime, String hostName, long pid) {
+            super.setDateTime(dateTime);
             super.setHostName(hostName);
             this.pid = pid;
         }

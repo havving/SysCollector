@@ -363,7 +363,12 @@ public class SystemCollectorService {
             for (String arg : procArgs) {
                 args = args.concat(arg.replaceAll("\\\\", "/").concat(" "));
             }
-            processSysModel.setArgs(args.trim());
+
+            args = args.trim();
+            if (args.length() > 255) {
+                args = args.substring(0, 254);
+            }
+            processSysModel.setArgs(args);
 
             if (processSysModel.getArgs().contains("-Dname")) {
                 processSysModel.setDname(StringUtils.substringBetween(processSysModel.getArgs(), "-Dname=", " "));
@@ -479,5 +484,25 @@ public class SystemCollectorService {
             log.debug("Validation Error. Server Internal Error send.");
             return new JsonResponse<>(StatusCode.SERVER_ERROR, generalSysModel);
         }
+    }
+
+    public void initLookupProcesses() {
+        if (validate()) {
+            try {
+                for (long pid : sigar.getProcList()) {
+                    ProcessSysModel result = (ProcessSysModel) getProcess(pid);
+                    if (Constants.getConfig().containsLookupProcess(result)) {
+                        lookup(result);
+                    }
+                }
+            } catch (SigarException e) {
+                printExceptionLog(getClass(), e);
+            }
+        }
+        Constants.initLookup();
+    }
+
+    private void lookup(ProcessSysModel model) {
+        Constants.addLookups(model);
     }
 }

@@ -1,5 +1,7 @@
 package com.havving.system.domain.xml;
 
+import com.havving.system.domain.impl.ProcessSysModel;
+
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
@@ -24,12 +26,12 @@ public class Configs {
     public List<Process> process;
     @XmlElement(name = "es-collect")
     public EsStore esCollect;
-/*
-    @XmlElement(name = "store", type = JpaStore.class)
-    public Store jpaStore;
-    @XmlElement(name = "store", type = EsStore.class)
-    public Store esStore;
-*/
+    /*
+        @XmlElement(name = "store", type = JpaStore.class)
+        public Store jpaStore;
+        @XmlElement(name = "store", type = EsStore.class)
+        public Store esStore;
+    */
     // Store는 1개만 정의할 수 있다.
     @XmlElements({
             @XmlElement(name = "store", type = EsStore.class),
@@ -52,9 +54,28 @@ public class Configs {
                 }
             }
         }
-
         return false;
     }
 
+    public boolean containsLookupProcess(ProcessSysModel model) {
+        if (model.getArgs() != null && model.getName() != null)
+            return containsLookupProcess(model.getArgs()) || containsLookupProcess(model.getName());
+        else
+            return model.getArgs() == null && containsLookupProcess(model.getName());
 
+    }
+
+
+    public double getThresholdByPid(long pid) {
+        double result = -1d;
+        if (process != null) {
+            for (Process p : process) {
+                if (p.getPid() == pid) {
+                    result = p.threshold;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
 }

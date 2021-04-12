@@ -86,8 +86,8 @@ public class SysCollectorBatch extends BatchExecutor {
             engineStats = ((EsStoreService) esCollectorService).getEngineStats();
         }
 
-        // JPA Store
-        StoreService jpaStoreService = Constants.getInstance().getStoreCollector();
+        // get StoreService
+        StoreService storeService = Constants.getInstance().getStoreCollector();
 
         List<SysModel> models = new ArrayList<SysModel>();
         if (cpu != null) models.add(cpu);
@@ -102,7 +102,7 @@ public class SysCollectorBatch extends BatchExecutor {
         }
 
         if (models.size() > 0) {
-            jpaStoreService.store(models);
+            storeService.store(models);
             log.info("{} columns updated.", models.size());
         } else log.info("Collection data size '0'. Information does not be sent.");
     }

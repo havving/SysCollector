@@ -25,6 +25,6 @@
 
     <store class="com.havving.system.domain.xml.JpaStore" hibernate-path="hibernate.cfg.xml"/>
     <store class="com.havving.system.domain.xml.EsStore" destination-port="9200" masterIp="localhost" indexPrefix="info"/>
-<!--    <sotre class="com.havving.system.domain.xml.RestStore" url="http://192.168.0.22:9200/admin/collector/insert/" />-->
+<!--    <store class="com.havving.system.domain.xml.RestStore" url="http://192.168.0.22:9200/admin/collector/insert/" />-->
 
 </configs>

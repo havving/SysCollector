@@ -2,6 +2,7 @@ package com.havving.system.global;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.havving.system.domain.impl.ProcessSysModel;
 import com.havving.system.domain.xml.*;
 import com.havving.system.service.EsCollectorService;
 import com.havving.system.service.StoreService;
@@ -17,12 +18,20 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.SigarProxyCache;
 import org.reflections.Reflections;
 
 import javax.persistence.Entity;
+import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveTask;
+
+import static com.havving.util.ExceptionUtils.printExceptionLog;
 
 /**
  * Created by HAVVING on 2021-03-09.
@@ -30,6 +39,8 @@ import java.util.UUID;
 @Slf4j
 public class Constants {
     private static final Constants constants = new Constants();
+    private static final ForkJoinPool taskRunner = new ForkJoinPool(Runtime.getRuntime().availableProcessors() / 2);
+    private static Map<Long, ProcessSysModel> lookupProcess = new ConcurrentHashMap<>();
     private final Settings.Builder clientSet = Settings.builder()
             .put("action.auto_create_index", true)
             .put("client.transport.sniff", true)
@@ -94,7 +105,6 @@ public class Constants {
         getInstance().systemCollectorService = new SystemCollectorService();
 
          Store store = getConfig().store.get(0);
-//        Store store = getConfig().jpaStore;
         if (store instanceof EsStore) {
             getInstance().storeCollector = new EsRestStoreService();
         } else if (store instanceof JpaStore) {
@@ -159,6 +169,36 @@ public class Constants {
     public static BatchConfig setBatchConfig(BatchConfig batchConfig) {
         log.trace("Config injection {}", batchConfig);
         return getInstance().batchConfig = batchConfig;
+    }
+
+    public static void addLookups(ProcessSysModel model) {
+        log.debug("Process catch. {}", model.getPid());
+        log.trace("Process will be looked up. Process Information : {}", model);
+        lookupProcess.put(model.getPid(), model);
+    }
+
+    public static void initLookup() {
+        final Collection<ProcessSysModel> lookupValues = lookupProcess.values();
+        Integer taskKilled = taskRunner.invoke(new RecursiveTask<Integer>() {
+            @Override
+            protected Integer compute() {
+                log.trace("Process Lookup Start... {}", lookupValues.size());
+                int kills = 0;
+                for (ProcessSysModel p : lookupValues) {
+                    if (p.getCpuUsage() >= Constants.getConfig().getThresholdByPid(p.getPid())) {
+                        try {
+                            log.info("Process Kill. pid : {}, load : {}, data : {}", p.getCpuUsage(), p.getPid(), p);
+                            getInstance().sigar.kill(p.getPid(), 9);
+                            kills++;
+                        } catch (SigarException e) {
+                            printExceptionLog(getClass(), e);
+                        }
+                    }
+                }
+                return kills;
+            }
+        });
+        log.info("Process Kill complete. {} processes has been killed.", taskKilled);
     }
 
 
