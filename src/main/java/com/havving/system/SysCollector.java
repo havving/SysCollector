@@ -5,9 +5,8 @@ import com.havving.system.domain.xml.BatchConfig;
 import com.havving.system.domain.xml.Configs;
 import com.havving.system.domain.xml.EsStore;
 import com.havving.system.domain.xml.JpaStore;
-import com.havving.system.global.ConnectionFactory;
 import com.havving.system.global.Constants;
-import com.havving.system.service.batch.BatchManager;
+import com.havving.system.service.ServiceManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Level;
@@ -36,7 +35,8 @@ public class SysCollector {
      * 2. check argument
      * 3. shutdown hook
      * 4. create pid file
-     * 5. service run
+     * 5. connection init
+     * 6. start batch
      *
      * @param args
      */
@@ -46,10 +46,10 @@ public class SysCollector {
         }
 
         // Initialize
-        URL url = SysCollector.class.getClassLoader().getResource("syscollector.xml");
-        URL url_2 = SysCollector.class.getClassLoader().getResource("batchConfig.xml");
-        File xmlFile = new File(url.getFile());
-        File xmlFile_2 = new File(url_2.getFile());
+        URL sys_url = SysCollector.class.getClassLoader().getResource("syscollector.xml");
+        URL batch_url = SysCollector.class.getClassLoader().getResource("batchConfig.xml");
+        File xmlFile = new File(sys_url.getFile());
+        File xmlFile_2 = new File(batch_url.getFile());
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Configs.class, JpaStore.class, EsStore.class);
             Unmarshaller u = jaxbContext.createUnmarshaller();
@@ -76,10 +76,7 @@ public class SysCollector {
         shutdownHook();
         createPidFile();
         log.info("ServiceManager Run.");
-        // TODO 추후 재정비
-        ConnectionFactory.getConnFactory().init();
-        BatchManager.startBatch();
-
+        ServiceManager.init(args);
     }
 
 
@@ -151,8 +148,8 @@ public class SysCollector {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                log.info("SysCollector terminate signal gas been called. Process goes down.\n ");
-                System.out.println("SysCollector terminate signal gas been called. Process goes down.\n");
+                log.info("SysCollector terminate signal has been called. Process goes down.\n ");
+                System.out.println("SysCollector terminate signal has been called. Process goes down.\n");
             }
         });
     }
@@ -175,6 +172,7 @@ public class SysCollector {
             System.out.println("SysCollector has been initialized pid: " + pid + " location: " + pidFile.getAbsoluteFile());
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
 }

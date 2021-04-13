@@ -23,8 +23,8 @@
 
 <!--    <es-collect masterIp="localhost" destination-port="9200"/>-->
 
-    <store class="com.havving.system.domain.xml.JpaStore" hibernate-path="hibernate.cfg.xml"/>
-    <store class="com.havving.system.domain.xml.EsStore" destination-port="9200" masterIp="localhost" indexPrefix="info"/>
-<!--    <store class="com.havving.system.domain.xml.RestStore" url="http://192.168.0.22:9200/admin/collector/insert/" />-->
+    <jpa-store hibernate-path="hibernate.cfg.xml"/>
+    <es-store destination-port="9200" masterIp="localhost" indexPrefix="info"/>
+<!--    <rest-store url="http://192.168.0.22:9200/admin/collector/insert/" />-->
 
 </configs>

@@ -13,7 +13,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -70,29 +72,11 @@ public class Constants {
     public static Constants getInstance() {
         if (constants == null) {
             synchronized (Constants.class) {
-                return constants;
+                return null;
             }
         } else return constants;
     }
 
-
-    /**
-     * syscollector.xml config
-     * @return
-     */
-    public static Configs getConfig() {
-        return getInstance().configs;
-    }
-
-
-
-    /**
-     * batchConfig.xml config
-     * @return
-     */
-    public static BatchConfig getBatchConfig() {
-        return getInstance().batchConfig;
-    }
 
     /**
      * Sigar, Gson, ES 초기화
@@ -104,7 +88,7 @@ public class Constants {
         getInstance().gson = new GsonBuilder().disableHtmlEscaping().create();
         getInstance().systemCollectorService = new SystemCollectorService();
 
-         Store store = getConfig().store.get(0);
+        Store store = getConfig().store.get(0);
         if (store instanceof EsStore) {
             getInstance().storeCollector = new EsRestStoreService();
         } else if (store instanceof JpaStore) {
@@ -133,7 +117,6 @@ public class Constants {
 
 
     /**
-     *
      * @param esStore
      * @return
      */
@@ -141,7 +124,6 @@ public class Constants {
         log.debug("Client connection info: {}, {}, {}", esStore.masterIp, esStore.clusterName, esStore.destinationPort);
 
         // ES connection set
-
 /*        Client client = new TransportClient(
                 getInstance().clientSet.put("cluster.name", esStore.clusterName).build()
         ).addTransportAddress(
@@ -151,6 +133,26 @@ public class Constants {
 //        log.debug("Store client init method called. Engine client null is {}", client == null);
 
         return null;
+    }
+
+
+    /**
+     * syscollector.xml config
+     *
+     * @return
+     */
+    public static Configs getConfig() {
+        return getInstance().configs;
+    }
+
+
+    /**
+     * batchConfig.xml config
+     *
+     * @return
+     */
+    public static BatchConfig getBatchConfig() {
+        return getInstance().batchConfig;
     }
 
 
@@ -204,6 +206,7 @@ public class Constants {
 
     /**
      * get SystemCollectorService
+     *
      * @return
      */
     public SystemCollectorService getSystemCollector() {
@@ -213,6 +216,7 @@ public class Constants {
 
     /**
      * get Sigar library
+     *
      * @return
      */
     public Sigar getSigar() {
@@ -222,6 +226,7 @@ public class Constants {
 
     /**
      * get StoreService
+     *
      * @return
      */
     public StoreService getStoreCollector() {

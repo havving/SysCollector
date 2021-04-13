@@ -4,8 +4,6 @@ import com.havving.system.global.Constants;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
-import java.util.Date;
-
 import static org.quartz.CronScheduleBuilder.cronSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
@@ -16,7 +14,7 @@ import static org.quartz.TriggerBuilder.newTrigger;
  */
 public class BatchManager {
 
-    public static void startBatch() {
+    public synchronized static void startBatch() {
         try {
             String groupName = Constants.getBatchConfig().job.group;
             String jobName = Constants.getBatchConfig().job.name;
@@ -43,4 +41,5 @@ public class BatchManager {
             e.printStackTrace();
         }
     }
+
 }

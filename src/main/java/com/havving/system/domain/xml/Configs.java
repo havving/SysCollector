@@ -9,14 +9,9 @@ import java.util.List;
  * Created by HAVVING on 2021-03-06.
  * syscollector.xml configure class
  */
-
+// TODO 낙타표기법, 캐멀표기법 통일하기
 @XmlRootElement
 public class Configs {
-/*    public Configs() {
-        jpaStore = new JpaStore();
-        esStore = new EsStore();
-    }*/
-
     @XmlAttribute
     public String host;
     @XmlElement(name = "system-collect")
@@ -26,17 +21,12 @@ public class Configs {
     public List<Process> process;
     @XmlElement(name = "es-collect")
     public EsStore esCollect;
-    /*
-        @XmlElement(name = "store", type = JpaStore.class)
-        public Store jpaStore;
-        @XmlElement(name = "store", type = EsStore.class)
-        public Store esStore;
-    */
     // Store는 1개만 정의할 수 있다.
     @XmlElements({
-            @XmlElement(name = "store", type = EsStore.class),
-            @XmlElement(name = "store", type = JpaStore.class)
+            @XmlElement(name = "store", type = JpaStore.class),
+            @XmlElement(name = "store", type = EsStore.class)
     })
+    @XmlElement(name = "store")
     public List<Store> store;
 
 

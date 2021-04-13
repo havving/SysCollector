@@ -7,6 +7,8 @@ import org.quartz.*;
 
 import java.lang.reflect.Constructor;
 
+import static com.havving.util.ExceptionUtils.printExceptionLog;
+
 /**
  * Created by HAVVING on 2021-03-28.
  *
@@ -45,6 +47,6 @@ public class JobExecutor implements Job {
                 connection = null;
             }
         }
-
     }
+
 }

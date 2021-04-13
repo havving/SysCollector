@@ -79,15 +79,11 @@ public class SysCollectorBatch extends BatchExecutor {
             }
         }
 
-        // ES Store
-        StoreService esCollectorService = Constants.getInstance().getStoreCollector();
-        if (Constants.getConfig().systemCollect.engineEnable) {
-            // TODO getEngineStats
-            engineStats = ((EsStoreService) esCollectorService).getEngineStats();
-        }
-
         // get StoreService
         StoreService storeService = Constants.getInstance().getStoreCollector();
+        if (Constants.getConfig().systemCollect.engineEnable) {
+            engineStats = ((EsStoreService) storeService).getEngineStats();
+        }
 
         List<SysModel> models = new ArrayList<SysModel>();
         if (cpu != null) models.add(cpu);
