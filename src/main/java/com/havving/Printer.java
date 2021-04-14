@@ -7,8 +7,8 @@ import com.havving.system.service.SystemCollectorService;
 import org.hyperic.sigar.Sigar;
 
 import javax.xml.bind.JAXBContext;
-import java.io.File;
-import java.net.URL;
+import javax.xml.bind.Unmarshaller;
+import java.io.InputStream;
 import java.util.Date;
 
 /**
@@ -47,6 +47,7 @@ public class Printer {
 
     /**
      * 입력된 argument에 따른 출력
+     *
      * @param mode
      */
     public void print(PrintMode mode) {
@@ -91,7 +92,7 @@ public class Printer {
     private void printCpu() {
         System.out.println("\nCPU: ");
         CpuSysModel cpu = models[0].getCpu();
-        System.out.println("Sys:" + cpu.getSys() + ", Usr:" + cpu.getUser() + ", Wait: " + cpu.getWait() + ", Idle:" + cpu.getIdle());
+        System.out.println("Sys:" + cpu.getSys() + ", Usr:" + cpu.getUser() + ", Wait:" + cpu.getWait() + ", Idle:" + cpu.getIdle());
         if (cpu.getLoadAverage() != null) {
             System.out.println("Load Average 0:" + cpu.getLoadAverage().get(0) + ", 1:" + cpu.getLoadAverage().get(1) + ", 2:" + cpu.getLoadAverage().get(2));
         }
@@ -101,7 +102,7 @@ public class Printer {
      * Print [Memory] Information
      */
     private void printMemory() {
-        System.out.println("\nMemory :");
+        System.out.println("\nMemory:");
         MemorySysModel mem = models[0].getMemory();
         System.out.println("RamUsed:" + mem.getActualUsed() + ", RamFree:" + mem.getActualFree() + ", RamFree(%):" + mem.getFreePercent());
         System.out.println("SwapUsed:" + mem.getSwapUsed() + ", SwapFree:" + mem.getSwapFree() + ", SwapTotal:" + mem.getSwapTotal()
@@ -112,7 +113,7 @@ public class Printer {
      * Print [Disk] Information
      */
     private void printDisk() {
-        System.out.println("\nDisk :");
+        System.out.println("\nDisk:");
         DiskSysModel[] disks = models[0].getDisk();
         for (DiskSysModel d : disks) {
             System.out.println("    " + d.getName() + " Reads:" + d.getReads() + ", Writes:" + d.getWrites() + ", Queue:" + d.getQueue() + ", TotalBytes:" + d.getTotalBytes()
@@ -124,7 +125,7 @@ public class Printer {
      * Print [Network] Information
      */
     private void printNetwork() {
-        System.out.println("\nNetwork :");
+        System.out.println("\nNetwork:");
         NetworkSysModel[] networks = models[0].getNetwork();
         for (NetworkSysModel n : networks) {
             System.out.println("    " + n.getName() + " MacAddr:" + n.getMacAddr() + ", NetMask:" + n.getNetMask() + ", NetIpAddr:" + n.getNetIpAddr() + ", BroadCast:" + n.getBroadCast());
@@ -137,15 +138,16 @@ public class Printer {
      * Print [Config] Information
      */
     private void printConfig() {
-        URL url = Printer.class.getClassLoader().getResource("syscollector.xml");
-        File xmlFile = new File(url.getFile());
+        InputStream sys_url = Printer.class.getClassLoader().getResourceAsStream("syscollector.xml");
         try {
-//            System.out.println(JAXBContext.newInstance(Configs.class, xmlFile).toString());
-//            System.out.println(serializer.read(Configs.class, xml).toString());
+            JAXBContext jaxbContext = JAXBContext.newInstance(Configs.class);
+            Unmarshaller u = jaxbContext.createUnmarshaller();
+            Configs configs = (Configs) u.unmarshal(sys_url);
+            System.out.println(configs.toString());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public enum PrintMode {

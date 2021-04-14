@@ -12,7 +12,7 @@
             <ipAddressName>192.168.0.22</ipAddressName>
         </ipAddressNameList>
 
-        <engine destination-port="9300" clusterName="clusterName" masterIp="192.168.10.1" hotThreadCheckEnable="true"/>
+        <engine destinationPort="9300" clusterName="clusterName" masterIp="192.168.10.1" hotThreadCheckEnable="true"/>
     </system-collect>
 
     <process-collect>
@@ -21,10 +21,10 @@
 <!--        <process name="javac" kill="true" killType="CPU" threshold="20" killCount="3"/>-->
     </process-collect>
 
-<!--    <es-collect masterIp="localhost" destination-port="9200"/>-->
+<!--    <es-collect masterIp="localhost" destinationPort="9200"/>-->
 
-    <jpa-store hibernate-path="hibernate.cfg.xml"/>
-    <es-store destination-port="9200" masterIp="localhost" indexPrefix="info"/>
+    <jpa-store hibernatePath="hibernate.cfg.xml"/>
+    <es-store destinationPort="9200" masterIp="localhost" indexPrefix="info"/>
 <!--    <rest-store url="http://192.168.0.22:9200/admin/collector/insert/" />-->
 
 </configs>

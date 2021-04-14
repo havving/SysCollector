@@ -3,8 +3,6 @@ package com.havving.system;
 import com.havving.Printer;
 import com.havving.system.domain.xml.BatchConfig;
 import com.havving.system.domain.xml.Configs;
-import com.havving.system.domain.xml.EsStore;
-import com.havving.system.domain.xml.JpaStore;
 import com.havving.system.global.Constants;
 import com.havving.system.service.ServiceManager;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +15,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.management.ManagementFactory;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -46,19 +44,17 @@ public class SysCollector {
         }
 
         // Initialize
-        URL sys_url = SysCollector.class.getClassLoader().getResource("syscollector.xml");
-        URL batch_url = SysCollector.class.getClassLoader().getResource("batchConfig.xml");
-        File xmlFile = new File(sys_url.getFile());
-        File xmlFile_2 = new File(batch_url.getFile());
+        InputStream sys_url = SysCollector.class.getClassLoader().getResourceAsStream("syscollector.xml");
+        InputStream batch_url = SysCollector.class.getClassLoader().getResourceAsStream("batchConfig.xml");
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Configs.class, JpaStore.class, EsStore.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(Configs.class);
             Unmarshaller u = jaxbContext.createUnmarshaller();
-            Configs configs = (Configs) u.unmarshal(xmlFile);
+            Configs configs = (Configs) u.unmarshal(sys_url);
             Constants.setConfig(configs);
 
             JAXBContext jaxbContext_2 = JAXBContext.newInstance(BatchConfig.class);
             Unmarshaller u_2 = jaxbContext_2.createUnmarshaller();
-            BatchConfig batchConfig = (BatchConfig) u_2.unmarshal(xmlFile_2);
+            BatchConfig batchConfig = (BatchConfig) u_2.unmarshal(batch_url);
             Constants.setBatchConfig(batchConfig);
 
         } catch (JAXBException e) {

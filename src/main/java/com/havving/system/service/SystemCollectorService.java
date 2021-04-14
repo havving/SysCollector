@@ -475,6 +475,8 @@ public class SystemCollectorService {
         if (validate()) {
             generalSysModel.setCpu((CpuSysModel) getCpu());
             generalSysModel.setDisk((DiskSysModel[]) getDisk());
+            generalSysModel.setMemory((MemorySysModel) getMemory());
+            generalSysModel.setNetwork((NetworkSysModel[]) getNetworks());
 
             JsonResponse<GeneralSysModel> result = new JsonResponse<>(StatusCode.OK, generalSysModel);
             log.debug("Response : {}", result);

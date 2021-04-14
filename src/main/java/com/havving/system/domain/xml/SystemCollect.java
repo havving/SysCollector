@@ -1,5 +1,7 @@
 package com.havving.system.domain.xml;
 
+import lombok.ToString;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -10,6 +12,7 @@ import java.util.Vector;
 /**
  * Created by HAVVING on 2021-03-06.
  */
+@ToString
 public class SystemCollect {
     @XmlAttribute
     public boolean cpuEnable = false;

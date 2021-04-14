@@ -21,6 +21,7 @@ public class GeneralSysModel implements SysModel {
         this.host = hostName;
     }
 
+    @Override
     public String getHost() {
         return host;
     }
@@ -29,18 +30,22 @@ public class GeneralSysModel implements SysModel {
         this.host = host;
     }
 
+    @Override
     public String getHostName() {
         return hostName;
     }
 
+    @Override
     public void setHostName(String hostName) {
         this.hostName = hostName;
     }
 
+    @Override
     public String getType() {
         return this.type;
     }
 
+    @Override
     public long getTime() {
         return new DateTime().getMillis();
     }

@@ -1,6 +1,7 @@
 package com.havving.system.domain.xml;
 
 import com.havving.system.domain.impl.ProcessSysModel;
+import lombok.ToString;
 
 import javax.xml.bind.annotation.*;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by HAVVING on 2021-03-06.
  * syscollector.xml configure class
  */
-// TODO 낙타표기법, 캐멀표기법 통일하기
+@ToString
 @XmlRootElement
 public class Configs {
     @XmlAttribute
@@ -23,10 +24,9 @@ public class Configs {
     public EsStore esCollect;
     // Store는 1개만 정의할 수 있다.
     @XmlElements({
-            @XmlElement(name = "store", type = JpaStore.class),
-            @XmlElement(name = "store", type = EsStore.class)
+            @XmlElement(name = "jpa-store", type = JpaStore.class),
+            @XmlElement(name = "es-store", type = EsStore.class)
     })
-    @XmlElement(name = "store")
     public List<Store> store;
 
 
@@ -68,4 +68,6 @@ public class Configs {
         }
         return result;
     }
+
+
 }
