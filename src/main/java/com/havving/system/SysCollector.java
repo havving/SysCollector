@@ -77,7 +77,7 @@ public class SysCollector {
 
 
     /**
-     * cmd 명령어에 따른 출력 기능 수행
+     * cmd 명령어(Program Arguments)에 따른 출력 기능 수행
      *
      * @param args
      */
@@ -138,7 +138,7 @@ public class SysCollector {
 
 
     /**
-     * JVM 셧다운 전, 종료 작업 처리
+     * JVM 셧다운 전, 종료 작업 처리 (log 출력)
      */
     private static void shutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread() {

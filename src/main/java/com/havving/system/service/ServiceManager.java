@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by HAVVING on 2021-04-13.
- *
  */
 @Slf4j
 public class ServiceManager {

@@ -135,48 +135,20 @@ public class Constants {
 
 
     /**
-     * syscollector.xml config
      *
-     * @return
+     * @param model
      */
-    public static Configs getConfig() {
-        return getInstance().configs;
-    }
-
-
-    /**
-     * batchConfig.xml config
-     *
-     * @return
-     */
-    public static BatchConfig getBatchConfig() {
-        return getInstance().batchConfig;
-    }
-
-
-    /**
-     * config setting
-     */
-    public static Configs setConfig(Configs config) {
-        log.trace("Config injection {}", config);
-        return getInstance().configs = config;
-    }
-
-
-    /**
-     * config setting
-     */
-    public static BatchConfig setBatchConfig(BatchConfig batchConfig) {
-        log.trace("Config injection {}", batchConfig);
-        return getInstance().batchConfig = batchConfig;
-    }
-
     public static void addLookups(ProcessSysModel model) {
         log.debug("Process catch. {}", model.getPid());
         log.trace("Process will be looked up. Process Information : {}", model);
         lookupProcess.put(model.getPid(), model);
     }
 
+
+    /**
+     *
+     * @return
+     */
     public static void initLookup() {
         final Collection<ProcessSysModel> lookupValues = lookupProcess.values();
         Integer taskKilled = taskRunner.invoke(new RecursiveTask<Integer>() {
@@ -199,6 +171,44 @@ public class Constants {
             }
         });
         log.info("Process Kill complete. {} processes has been killed.", taskKilled);
+    }
+
+
+    /**
+     * get syscollector.xml config
+     *
+     * @return
+     */
+    public static Configs getConfig() {
+        return getInstance().configs;
+    }
+
+
+    /**
+     * get batchConfig.xml config
+     *
+     * @return
+     */
+    public static BatchConfig getBatchConfig() {
+        return getInstance().batchConfig;
+    }
+
+
+    /**
+     * set syscollector.xml config
+     */
+    public static Configs setConfig(Configs config) {
+        log.trace("Config injection {}", config);
+        return getInstance().configs = config;
+    }
+
+
+    /**
+     * set batchConfig.xml config
+     */
+    public static BatchConfig setBatchConfig(BatchConfig batchConfig) {
+        log.trace("Config injection {}", batchConfig);
+        return getInstance().batchConfig = batchConfig;
     }
 
 
