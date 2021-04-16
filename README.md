@@ -18,7 +18,7 @@
 > * CLASSPATH 지정 시, Sigar 라이브러리를 지정해 주어야 함
 > * -Dlog.root.level 설정으로 루트 로그 레벨 지정 가능 (info, warn 등...)
 > * Command Mode 지원
->> * java -jar syscollector-{VERSION}.jar {options} 사용
+>> * java -jar SysCollector.jar {options} 사용
 >> * --help 혹은 -h 명령어를 통해 해당 예약어 및 동작 확인 가능
 >> * com.havving.Printer 내에서 소스 코드 확인 가능
 
