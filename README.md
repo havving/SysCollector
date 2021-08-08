@@ -1,7 +1,7 @@
 # SysCollector
 
 ### Configuration
-> 1. 최상위 요소의 hsot에 설치되어 있는 IP 입력
+> 1. 최상위 요소의 host에 설치되어 있는 IP 입력
 > 2. system-collect 요소에 각 수집 항목의 enable 여부 지정
 >> cpuEnabled, memoryEnabled, diskEnabled, networkEnabled, engineEnabled
 > 3. disk, network 활성화 시, 수집할 디렉토리명 및 IP Address 기입
